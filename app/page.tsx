@@ -1,0 +1,97 @@
+'use client';
+
+import React from 'react';
+import { HeroSection } from '@/components/HeroSection';
+import { AccreditationStrip } from '@/components/AccreditationStrip';
+import { LimitedTimeOfferBanner } from '@/components/LimitedTimeOfferBanner';
+import { ServicesGrid } from '@/components/ServicesGrid';
+import { BeforeAfterSlider } from '@/components/BeforeAfterSlider';
+import { EngineeringBlueprint } from '@/components/EngineeringBlueprint';
+import { ProcessProtocol } from '@/components/ProcessProtocol';
+import { InteractiveMapRegions } from '@/components/InteractiveMapRegions';
+import { PestIdentifierTool } from '@/components/PestIdentifierTool';
+import { PricingSection } from '@/components/PricingSection';
+import { ComparisonTable } from '@/components/ComparisonTable';
+import { CommercialSection } from '@/components/CommercialSection';
+import { WarrantyVerifier } from '@/components/WarrantyVerifier';
+import { ReviewsSection } from '@/components/ReviewsSection';
+import { BlogSection } from '@/components/BlogSection';
+import { FaqSection } from '@/components/FaqSection';
+import { useSite } from '@/components/SiteProvider';
+
+export default function HomePage() {
+  const { selectedCity, setSelectedCity, openCalculator, openAiConsultant } = useSite();
+
+  return (
+    <main className="w-full flex flex-col relative">
+      {/* 1. Authority Hero & Service Dispatch Terminal */}
+      <HeroSection
+        selectedCity={selectedCity}
+        onSelectCity={setSelectedCity}
+        onOpenCalculator={() => openCalculator()}
+        onOpenAiConsultant={openAiConsultant}
+      />
+
+      {/* 2. Official Regulatory & Accreditation Strip (SFDA, Balady, SBC, ISO) */}
+      <AccreditationStrip />
+
+      {/* 3. Limited-Time Campaign & Urgency Banner */}
+      <div className="pt-8 bg-slate-100">
+        <LimitedTimeOfferBanner
+          selectedCity={selectedCity}
+          onOpenCalculator={(coupon) => openCalculator(coupon)}
+        />
+      </div>
+
+      {/* 4. Categorized Services Grid & Technical Specs */}
+      <ServicesGrid
+        selectedCity={selectedCity}
+        onOpenCalculator={() => openCalculator()}
+      />
+
+      {/* 5. Interactive Before & After Treatment Slider */}
+      <BeforeAfterSlider />
+
+      {/* 6. Interactive Building Engineering Blueprint & Treatment Zones */}
+      <EngineeringBlueprint />
+
+      {/* 7. 4-Step Scientific IPM Protocol */}
+      <ProcessProtocol />
+
+      {/* 8. Interactive 13 Saudi Regions Coverage & Live Branch Dispatch */}
+      <InteractiveMapRegions
+        selectedCity={selectedCity}
+        onSelectCity={setSelectedCity}
+      />
+
+      {/* 9. Pest Identification & Scientific Diagnostic Guide */}
+      <PestIdentifierTool
+        onOpenAiConsultant={openAiConsultant}
+      />
+
+      {/* 10. Certified Standards vs Unlicensed Market Comparison */}
+      <ComparisonTable />
+
+      {/* 11. Commercial & B2B Contracts Section */}
+      <CommercialSection />
+
+      {/* 12. Transparent Pricing Packages & Official Guarantees */}
+      <PricingSection
+        selectedCity={selectedCity}
+        onOpenCalculator={() => openCalculator()}
+      />
+
+      {/* 13. Electronic Warranty Verification Tool */}
+      <WarrantyVerifier />
+
+      {/* 14. Customer Reviews Across Saudi Cities */}
+      <ReviewsSection />
+
+      {/* 15. Safety & Technical Knowledge Hub */}
+      <BlogSection />
+
+      {/* 16. Frequently Asked Questions */}
+      <FaqSection />
+    </main>
+  );
+}

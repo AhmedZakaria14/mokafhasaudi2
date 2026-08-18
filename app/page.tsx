@@ -24,7 +24,7 @@ export default function HomePage() {
 
   return (
     <main className="w-full flex flex-col relative">
-      {/* 1. Authority Hero & Service Dispatch Terminal */}
+      {/* 1. Primary Authority Hero & Direct Dispatch Terminal */}
       <HeroSection
         selectedCity={selectedCity}
         onSelectCity={setSelectedCity}
@@ -32,11 +32,11 @@ export default function HomePage() {
         onOpenAiConsultant={openAiConsultant}
       />
 
-      {/* 2. Official Regulatory & Accreditation Strip (SFDA, Balady, SBC, ISO) */}
+      {/* 2. Official Regulatory Accreditation Strip */}
       <AccreditationStrip />
 
-      {/* 3. Limited-Time Campaign & Urgency Banner */}
-      <div className="pt-8 bg-slate-100">
+      {/* 3. Limited-Time Offer Banner with Collapsible/Claim coupon */}
+      <div className="pt-6 bg-slate-100">
         <LimitedTimeOfferBanner
           selectedCity={selectedCity}
           onOpenCalculator={(coupon) => openCalculator(coupon)}
@@ -49,27 +49,27 @@ export default function HomePage() {
         onOpenCalculator={() => openCalculator()}
       />
 
-      {/* 5. Interactive Before & After Treatment Slider */}
+      {/* 5. Interactive Before & After Treatment Evidence */}
       <BeforeAfterSlider />
 
-      {/* 6. Interactive Building Engineering Blueprint & Treatment Zones */}
+      {/* 6. Interactive Engineering Blueprint & Treatment Zones */}
       <EngineeringBlueprint />
 
       {/* 7. 4-Step Scientific IPM Protocol */}
       <ProcessProtocol />
 
-      {/* 8. Interactive 13 Saudi Regions Coverage & Live Branch Dispatch */}
+      {/* 8. Saudi 13 Regions & 54 Governorates Live Coverage */}
       <InteractiveMapRegions
         selectedCity={selectedCity}
         onSelectCity={setSelectedCity}
       />
 
-      {/* 9. Pest Identification & Scientific Diagnostic Guide */}
+      {/* 9. Scientific Pest Identification & Wiki Guide */}
       <PestIdentifierTool
         onOpenAiConsultant={openAiConsultant}
       />
 
-      {/* 10. Certified Standards vs Unlicensed Market Comparison */}
+      {/* 10. Certified SFDA Standards vs Unlicensed Market Comparison */}
       <ComparisonTable />
 
       {/* 11. Commercial & B2B Contracts Section */}

@@ -18,7 +18,8 @@ import {
   BookOpen,
   HelpCircle,
   Tag,
-  ChevronLeft
+  ChevronLeft,
+  Settings
 } from 'lucide-react';
 import { SAUDI_CITIES } from '@/data/regions';
 import { PEST_SERVICES } from '@/data/services';
@@ -26,6 +27,7 @@ import { PEST_SERVICES } from '@/data/services';
 interface NavbarProps {
   onOpenCalculator?: () => void;
   onOpenAiConsultant?: () => void;
+  onOpenSettings?: () => void;
   selectedCity?: string;
   onSelectCity?: (cityId: string) => void;
 }
@@ -33,6 +35,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({
   onOpenCalculator,
   onOpenAiConsultant,
+  onOpenSettings,
   selectedCity = 'riyadh',
   onSelectCity
 }) => {
@@ -40,6 +43,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdown, setServicesDropdown] = useState(false);
   const [citiesDropdown, setCitiesDropdown] = useState(false);
+  const [moreDropdown, setMoreDropdown] = useState(false);
 
   const navRef = useRef<HTMLDivElement>(null);
 
@@ -64,6 +68,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       if (navRef.current && !navRef.current.contains(e.target as Node)) {
         setServicesDropdown(false);
         setCitiesDropdown(false);
+        setMoreDropdown(false);
         setMobileMenuOpen(false);
       }
     };
@@ -74,6 +79,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const closeAll = () => {
     setServicesDropdown(false);
     setCitiesDropdown(false);
+    setMoreDropdown(false);
     setMobileMenuOpen(false);
   };
 
@@ -96,6 +102,19 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
+            {/* Quick Settings Action in top bar */}
+            {onOpenSettings && (
+              <button
+                type="button"
+                onClick={onOpenSettings}
+                className="hidden sm:flex items-center gap-1 text-slate-300 hover:text-white px-2 py-0.5 rounded text-[11px] transition cursor-pointer"
+                title="إعدادات وتخصيص الموقع"
+              >
+                <Settings className="w-3 h-3 text-emerald-400" />
+                <span>التخصيص والمدينة</span>
+              </button>
+            )}
+
             <a
               href="tel:0558141870"
               className="flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-600 text-white px-2.5 py-0.5 rounded-full text-[11px] font-bold transition shadow-xs"
@@ -121,10 +140,10 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Desktop Navigation Links */}
           <div className="hidden lg:flex items-center gap-1 xl:gap-2 text-xs xl:text-sm font-bold text-slate-700">
-            {/* Services Dropdown */}
+            {/* 1. Primary Action: Services Dropdown */}
             <div
               className="relative"
-              onMouseEnter={() => { setServicesDropdown(true); setCitiesDropdown(false); }}
+              onMouseEnter={() => { setServicesDropdown(true); setCitiesDropdown(false); setMoreDropdown(false); }}
               onMouseLeave={() => setServicesDropdown(false)}
             >
               <button
@@ -171,10 +190,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </div>
 
-            {/* Cities Dropdown */}
+            {/* 2. Primary Action: Cities & Branches Dropdown */}
             <div
               className="relative"
-              onMouseEnter={() => { setCitiesDropdown(true); setServicesDropdown(false); }}
+              onMouseEnter={() => { setCitiesDropdown(true); setServicesDropdown(false); setMoreDropdown(false); }}
               onMouseLeave={() => setCitiesDropdown(false)}
             >
               <button
@@ -228,7 +247,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </div>
 
-            {/* Direct Links */}
+            {/* 3. Primary Action: Pricing Packages */}
             <Link
               href="/#pricing"
               onClick={closeAll}
@@ -237,6 +256,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               باقات الأسعار
             </Link>
 
+            {/* 4. Primary Action: Commercial B2B */}
             <Link
               href="/#commercial"
               onClick={closeAll}
@@ -245,25 +265,81 @@ export const Navbar: React.FC<NavbarProps> = ({
               عقود الشركات
             </Link>
 
-            <Link
-              href="/#warranty-check"
-              onClick={closeAll}
-              className="px-3 py-2 rounded-xl hover:bg-slate-100 hover:text-emerald-800 transition"
+            {/* 5. Progressive Disclosure: "المزيد" More Options Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => { setMoreDropdown(true); setServicesDropdown(false); setCitiesDropdown(false); }}
+              onMouseLeave={() => setMoreDropdown(false)}
             >
-              فحص الضمان
-            </Link>
+              <button
+                type="button"
+                onClick={() => setMoreDropdown(!moreDropdown)}
+                className={`flex items-center gap-1 px-3 py-2 rounded-xl transition cursor-pointer ${
+                  moreDropdown ? 'bg-emerald-50 text-emerald-800' : 'hover:bg-slate-100 hover:text-emerald-800'
+                }`}
+              >
+                <span>المزيد</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${moreDropdown ? 'rotate-180' : ''}`} />
+              </button>
 
-            <Link
-              href="/blog"
-              onClick={closeAll}
-              className="px-3 py-2 rounded-xl hover:bg-slate-100 hover:text-emerald-800 transition"
-            >
-              المدونة
-            </Link>
+              {/* More Grouped Dropdown */}
+              {moreDropdown && (
+                <div className="absolute right-0 top-full mt-1 w-56 bg-white border border-slate-200 rounded-2xl shadow-xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150 text-right">
+                  <Link
+                    href="/#warranty-check"
+                    onClick={closeAll}
+                    className="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 text-slate-800 transition text-xs font-semibold"
+                  >
+                    <FileCheck2 className="w-4 h-4 text-emerald-700" />
+                    <span>فحص سريان الضمان</span>
+                  </Link>
+
+                  <Link
+                    href="/#pests-guide"
+                    onClick={closeAll}
+                    className="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 text-slate-800 transition text-xs font-semibold"
+                  >
+                    <BookOpen className="w-4 h-4 text-emerald-700" />
+                    <span>موسوعة الآفات</span>
+                  </Link>
+
+                  <Link
+                    href="/blog"
+                    onClick={closeAll}
+                    className="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 text-slate-800 transition text-xs font-semibold"
+                  >
+                    <BookOpen className="w-4 h-4 text-emerald-700" />
+                    <span>المدونة والاستشارات</span>
+                  </Link>
+
+                  <Link
+                    href="/#faq"
+                    onClick={closeAll}
+                    className="flex items-center gap-2 p-2.5 rounded-xl hover:bg-slate-50 text-slate-800 transition text-xs font-semibold"
+                  >
+                    <HelpCircle className="w-4 h-4 text-emerald-700" />
+                    <span>الأسئلة الشائعة</span>
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Action CTAs */}
           <div className="flex items-center gap-2">
+            {/* Secondary Settings Icon */}
+            {onOpenSettings && (
+              <button
+                type="button"
+                onClick={onOpenSettings}
+                className="p-2 rounded-xl text-slate-700 hover:text-emerald-900 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition cursor-pointer active:scale-95"
+                title="لوحة الإعدادات والتخصيص"
+                aria-label="الإعدادات والتخصيص"
+              >
+                <Settings className="w-4 h-4 text-slate-700" />
+              </button>
+            )}
+
             {/* AI Diagnosis */}
             <button
               type="button"
@@ -315,16 +391,16 @@ export const Navbar: React.FC<NavbarProps> = ({
         {mobileMenuOpen && (
           <div className="lg:hidden bg-white border-t border-slate-200 px-4 pt-3 pb-6 space-y-3 animate-in fade-in slide-in-from-top-2 duration-150 text-right">
             {/* Quick Actions */}
-            <div className="grid grid-cols-2 gap-2 pb-3 border-b border-slate-100">
+            <div className="grid grid-cols-3 gap-2 pb-3 border-b border-slate-100">
               <button
                 onClick={() => {
                   if (onOpenCalculator) onOpenCalculator();
                   closeAll();
                 }}
-                className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold hover:bg-slate-200"
+                className="flex flex-col items-center justify-center p-2 rounded-xl bg-slate-100 text-slate-800 text-[11px] font-bold hover:bg-slate-200"
               >
-                <Calculator className="w-4 h-4 text-emerald-700" />
-                <span>حاسبة التكلفة</span>
+                <Calculator className="w-4 h-4 text-emerald-700 mb-0.5" />
+                <span>حاسبة السعر</span>
               </button>
 
               <button
@@ -332,10 +408,21 @@ export const Navbar: React.FC<NavbarProps> = ({
                   if (onOpenAiConsultant) onOpenAiConsultant();
                   closeAll();
                 }}
-                className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-emerald-50 text-emerald-900 border border-emerald-200 text-xs font-bold hover:bg-emerald-100"
+                className="flex flex-col items-center justify-center p-2 rounded-xl bg-emerald-50 text-emerald-900 border border-emerald-200 text-[11px] font-bold hover:bg-emerald-100"
               >
-                <Sparkles className="w-4 h-4 text-emerald-700" />
-                <span>طبيب الآفات الذكي</span>
+                <Sparkles className="w-4 h-4 text-emerald-700 mb-0.5" />
+                <span>طبيب الآفات</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  if (onOpenSettings) onOpenSettings();
+                  closeAll();
+                }}
+                className="flex flex-col items-center justify-center p-2 rounded-xl bg-slate-100 text-slate-800 text-[11px] font-bold hover:bg-slate-200"
+              >
+                <Settings className="w-4 h-4 text-slate-700 mb-0.5" />
+                <span>الإعدادات</span>
               </button>
             </div>
 

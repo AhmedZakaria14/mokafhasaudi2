@@ -1,22 +1,27 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { BrandLogo } from './BrandLogo';
 import {
   PhoneCall,
-  Clock,
   ShieldCheck,
   Menu,
   X,
   Calculator,
-  MessageSquare,
   MapPin,
   ChevronDown,
+  Sparkles,
+  Layers,
   Building2,
-  FileCheck
+  FileCheck2,
+  BookOpen,
+  HelpCircle,
+  Tag,
+  ChevronLeft
 } from 'lucide-react';
 import { SAUDI_CITIES } from '@/data/regions';
+import { PEST_SERVICES } from '@/data/services';
 
 interface NavbarProps {
   onOpenCalculator?: () => void;
@@ -33,86 +38,67 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [cityDropdownOpen, setCityDropdownOpen] = useState(false);
+  const [servicesDropdown, setServicesDropdown] = useState(false);
+  const [citiesDropdown, setCitiesDropdown] = useState(false);
+
+  const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
       }
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Close menus on click outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setServicesDropdown(false);
+        setCitiesDropdown(false);
+        setMobileMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const closeAll = () => {
+    setServicesDropdown(false);
+    setCitiesDropdown(false);
+    setMobileMenuOpen(false);
+  };
 
   const currentCityObj = SAUDI_CITIES.find((c) => c.id === selectedCity) || SAUDI_CITIES[0];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white transition-all duration-200">
-      {/* Top Official Registry Bar */}
-      <div className="bg-emerald-900 text-white text-xs py-2 px-4 border-b border-emerald-950/20">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-          {/* Trust Highlights */}
-          <div className="flex items-center gap-4 text-[11px] text-emerald-100">
-            <span className="flex items-center gap-1.5 font-bold text-white">
-              <ShieldCheck className="w-4 h-4 text-emerald-300" />
-              <span>مؤسسة وطنية رائدة في مكافحة الآفات والوقاية الإنشائية</span>
+    <header className="sticky top-0 z-50 w-full" ref={navRef}>
+      {/* 1. Slim Official Badge Strip */}
+      <div className="bg-slate-950 text-white text-[11px] py-1.5 px-4 border-b border-emerald-950/40">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 text-emerald-300 font-medium overflow-hidden text-ellipsis whitespace-nowrap">
+            <span className="flex items-center gap-1 text-white font-bold">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <span>مؤسسة معتمدة SFDA وبلدي</span>
             </span>
-            <span className="text-emerald-700 hidden md:inline">•</span>
-            <span className="hidden md:inline">مبيدات معتمدة وآمنة على البيئة</span>
-            <span className="text-emerald-700 hidden lg:inline">•</span>
-            <span className="hidden lg:inline">ضمانات معتمدة تصل حتى 15 سنة</span>
-            <span className="text-emerald-700 hidden xl:inline">•</span>
-            <span className="hidden xl:inline text-amber-200">استجابة فورية لكافة مدن ومناطق المملكة</span>
+            <span className="text-slate-600 hidden sm:inline">•</span>
+            <span className="hidden sm:inline text-slate-300">مبيدات آمنة 100% بدون رائحة</span>
+            <span className="text-slate-600 hidden md:inline">•</span>
+            <span className="hidden md:inline text-amber-300">ضمان حتى 15 سنة</span>
           </div>
 
-          {/* Quick city selector & direct phone */}
-          <div className="flex items-center gap-3">
-            {/* City Selector */}
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => setCityDropdownOpen(!cityDropdownOpen)}
-                className="flex items-center gap-1.5 text-xs text-white bg-emerald-800/80 hover:bg-emerald-800 px-2.5 py-1 rounded-md border border-emerald-700/60 transition cursor-pointer"
-              >
-                <MapPin className="w-3.5 h-3.5 text-emerald-300" />
-                <span>المدينة: <strong className="text-white">{currentCityObj.name}</strong></span>
-                <ChevronDown className="w-3 h-3 text-emerald-300" />
-              </button>
-
-              {cityDropdownOpen && (
-                <div className="absolute left-0 sm:right-0 sm:left-auto top-full mt-1 w-60 bg-white border border-slate-200 rounded-xl shadow-xl p-2 z-50 max-h-72 overflow-y-auto">
-                  <div className="text-[11px] font-bold text-slate-500 px-2 py-1 mb-1 border-b border-slate-100 flex items-center justify-between">
-                    <span>اختر مدينتك لطلب الخدمة:</span>
-                    <span className="text-[10px] text-emerald-700">خدمة 24 ساعة</span>
-                  </div>
-                  {SAUDI_CITIES.map((city) => (
-                    <button
-                      key={city.id}
-                      onClick={() => {
-                        if (onSelectCity) onSelectCity(city.id);
-                        setCityDropdownOpen(false);
-                      }}
-                      className={`w-full flex items-center justify-between text-right px-2.5 py-1.5 text-xs rounded-lg transition cursor-pointer ${
-                        city.id === selectedCity
-                          ? 'bg-emerald-700 text-white font-bold'
-                          : 'text-slate-700 hover:bg-slate-50'
-                      }`}
-                    >
-                      <span>{city.name}</span>
-                      <span className="text-[10px] opacity-75 font-mono">وصول {city.responseTimeMin} د</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Direct Phone */}
+          <div className="flex items-center gap-2 shrink-0">
             <a
               href="tel:0558141870"
-              className="font-bold text-white hover:text-amber-200 transition flex items-center gap-1.5 bg-amber-600 hover:bg-amber-700 px-2.5 py-1 rounded-md text-xs shadow-sm"
+              className="flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-600 text-white px-2.5 py-0.5 rounded-full text-[11px] font-bold transition shadow-xs"
             >
               <PhoneCall className="w-3 h-3" />
               <span className="font-mono font-bold" dir="ltr">0558141870</span>
@@ -121,141 +107,326 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
 
-      {/* Main Clean Corporate Navigation */}
+      {/* 2. Main Navigation Bar */}
       <nav
-        className={`w-full border-b border-slate-200 transition-all duration-200 ${
-          isScrolled ? 'py-3 shadow-sm' : 'py-4'
+        className={`w-full bg-white/95 backdrop-blur-md transition-all duration-200 border-b border-slate-200 ${
+          isScrolled ? 'py-2.5 shadow-md shadow-slate-900/5' : 'py-3.5'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
+          <Link href="/" onClick={closeAll} className="shrink-0 flex items-center">
             <BrandLogo variant="dark" size={isScrolled ? 'sm' : 'md'} />
           </Link>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center gap-6 text-sm font-semibold text-slate-700">
-            <Link href="/#services" className="hover:text-emerald-800 transition py-1">
-              خدمات المكافحة
+          <div className="hidden lg:flex items-center gap-1 xl:gap-2 text-xs xl:text-sm font-bold text-slate-700">
+            {/* Services Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => { setServicesDropdown(true); setCitiesDropdown(false); }}
+              onMouseLeave={() => setServicesDropdown(false)}
+            >
+              <button
+                type="button"
+                onClick={() => setServicesDropdown(!servicesDropdown)}
+                className={`flex items-center gap-1 px-3 py-2 rounded-xl transition cursor-pointer ${
+                  servicesDropdown ? 'bg-emerald-50 text-emerald-800' : 'hover:bg-slate-100 hover:text-emerald-800'
+                }`}
+              >
+                <span>خدمات المكافحة</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${servicesDropdown ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* Clean Services Dropdown Menu */}
+              {servicesDropdown && (
+                <div className="absolute right-0 top-full mt-1 w-72 bg-white border border-slate-200 rounded-2xl shadow-xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150 text-right">
+                  <div className="text-[11px] font-bold text-slate-400 px-3 py-1 mb-1">
+                    أبرز خدمات الرش والوقاية:
+                  </div>
+                  {PEST_SERVICES.slice(0, 6).map((service) => (
+                    <Link
+                      key={service.id}
+                      href={`/services/${service.id}`}
+                      onClick={closeAll}
+                      className="flex items-center justify-between p-2.5 rounded-xl hover:bg-emerald-50 text-slate-800 hover:text-emerald-900 transition group"
+                    >
+                      <div>
+                        <div className="text-xs font-bold">{service.title}</div>
+                        <div className="text-[10px] text-slate-500 line-clamp-1">{service.subtitle}</div>
+                      </div>
+                      <ChevronLeft className="w-3.5 h-3.5 text-slate-300 group-hover:text-emerald-700 shrink-0" />
+                    </Link>
+                  ))}
+                  <div className="border-t border-slate-100 mt-1 pt-1">
+                    <Link
+                      href="/#services"
+                      onClick={closeAll}
+                      className="block text-center py-2 text-xs font-bold text-emerald-700 hover:text-emerald-900 rounded-lg hover:bg-slate-50"
+                    >
+                      تصفح جميع الخدمات الـ 8 ←
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Cities Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => { setCitiesDropdown(true); setServicesDropdown(false); }}
+              onMouseLeave={() => setCitiesDropdown(false)}
+            >
+              <button
+                type="button"
+                onClick={() => setCitiesDropdown(!citiesDropdown)}
+                className={`flex items-center gap-1 px-3 py-2 rounded-xl transition cursor-pointer ${
+                  citiesDropdown ? 'bg-emerald-50 text-emerald-800' : 'hover:bg-slate-100 hover:text-emerald-800'
+                }`}
+              >
+                <MapPin className="w-3.5 h-3.5 text-emerald-600" />
+                <span>المدن والفروع</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform ${citiesDropdown ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* Clean Cities Dropdown Menu */}
+              {citiesDropdown && (
+                <div className="absolute right-0 top-full mt-1 w-64 bg-white border border-slate-200 rounded-2xl shadow-xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150 text-right">
+                  <div className="text-[11px] font-bold text-slate-400 px-3 py-1 mb-1 flex items-center justify-between">
+                    <span>فروع الاستجابة الفورية:</span>
+                    <span className="text-[10px] text-emerald-700">25 دقيقة</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-1">
+                    {SAUDI_CITIES.slice(0, 10).map((city) => (
+                      <Link
+                        key={city.id}
+                        href={`/city/${city.id}`}
+                        onClick={() => {
+                          if (onSelectCity) onSelectCity(city.id);
+                          closeAll();
+                        }}
+                        className={`p-2 rounded-xl text-xs font-semibold transition ${
+                          city.id === selectedCity
+                            ? 'bg-emerald-100 text-emerald-900 font-bold'
+                            : 'text-slate-700 hover:bg-slate-50 hover:text-emerald-800'
+                        }`}
+                      >
+                        {city.name}
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="border-t border-slate-100 mt-1 pt-1">
+                    <Link
+                      href="/#coverage-map"
+                      onClick={closeAll}
+                      className="block text-center py-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-900 rounded-lg hover:bg-slate-50"
+                    >
+                      عرض كافة الـ 15 مدينة والمناطق ←
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Direct Links */}
+            <Link
+              href="/#pricing"
+              onClick={closeAll}
+              className="px-3 py-2 rounded-xl hover:bg-slate-100 hover:text-emerald-800 transition"
+            >
+              باقات الأسعار
             </Link>
-            <Link href="/#coverage-map" className="hover:text-emerald-800 transition py-1">
-              تغطية المدن بالمملكة
+
+            <Link
+              href="/#commercial"
+              onClick={closeAll}
+              className="px-3 py-2 rounded-xl hover:bg-slate-100 hover:text-emerald-800 transition"
+            >
+              عقود الشركات
             </Link>
-            <Link href="/#commercial" className="hover:text-emerald-800 transition py-1">
-              عقود المنشآت والامتثال
-            </Link>
-            <Link href="/#warranty-check" className="hover:text-emerald-800 transition py-1">
+
+            <Link
+              href="/#warranty-check"
+              onClick={closeAll}
+              className="px-3 py-2 rounded-xl hover:bg-slate-100 hover:text-emerald-800 transition"
+            >
               فحص الضمان
             </Link>
-            <Link href="/blog" className="hover:text-emerald-800 transition py-1">
-              المدونة والاستشارات
-            </Link>
-            <Link href="/#faq" className="hover:text-emerald-800 transition py-1">
-              الأسئلة الشائعة
+
+            <Link
+              href="/blog"
+              onClick={closeAll}
+              className="px-3 py-2 rounded-xl hover:bg-slate-100 hover:text-emerald-800 transition"
+            >
+              المدونة
             </Link>
           </div>
 
-          {/* Header Action Buttons */}
-          <div className="hidden sm:flex items-center gap-2.5">
+          {/* Action CTAs */}
+          <div className="flex items-center gap-2">
+            {/* AI Diagnosis */}
             <button
               type="button"
-              onClick={onOpenCalculator}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition cursor-pointer"
+              onClick={() => {
+                if (onOpenAiConsultant) onOpenAiConsultant();
+                closeAll();
+              }}
+              className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-emerald-900 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+              <span>طبيب الآفات</span>
+            </button>
+
+            {/* Calculator Button */}
+            <button
+              type="button"
+              onClick={() => {
+                if (onOpenCalculator) onOpenCalculator();
+                closeAll();
+              }}
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition cursor-pointer"
             >
               <Calculator className="w-3.5 h-3.5 text-emerald-700" />
               <span>حاسبة التكلفة</span>
             </button>
 
+            {/* Call Direct */}
             <a
               href="tel:0558141870"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 shadow-sm transition"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 shadow-sm transition"
             >
               <PhoneCall className="w-3.5 h-3.5" />
               <span>طلب رش فوري</span>
             </a>
-          </div>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 border border-slate-200"
-            aria-label="القائمة"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+            {/* Mobile Menu Toggle */}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 border border-slate-200 cursor-pointer"
+              aria-label="القائمة"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Dropdown */}
+        {/* Mobile Clean Drawer Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-white border-t border-slate-200 px-4 pt-3 pb-6 space-y-3 shadow-lg">
+          <div className="lg:hidden bg-white border-t border-slate-200 px-4 pt-3 pb-6 space-y-3 animate-in fade-in slide-in-from-top-2 duration-150 text-right">
+            {/* Quick Actions */}
             <div className="grid grid-cols-2 gap-2 pb-3 border-b border-slate-100">
               <button
                 onClick={() => {
                   if (onOpenCalculator) onOpenCalculator();
-                  setMobileMenuOpen(false);
+                  closeAll();
                 }}
-                className="w-full flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold"
+                className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold hover:bg-slate-200"
               >
                 <Calculator className="w-4 h-4 text-emerald-700" />
                 <span>حاسبة التكلفة</span>
               </button>
-              <a
-                href="https://wa.me/966558141870"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold"
+
+              <button
+                onClick={() => {
+                  if (onOpenAiConsultant) onOpenAiConsultant();
+                  closeAll();
+                }}
+                className="flex items-center justify-center gap-1.5 p-2.5 rounded-xl bg-emerald-50 text-emerald-900 border border-emerald-200 text-xs font-bold hover:bg-emerald-100"
               >
-                <MessageSquare className="w-4 h-4 text-emerald-700" />
-                <span>واتساب مباشر</span>
-              </a>
+                <Sparkles className="w-4 h-4 text-emerald-700" />
+                <span>طبيب الآفات الذكي</span>
+              </button>
             </div>
 
+            {/* Navigation Links */}
             <div className="space-y-1 text-sm font-semibold text-slate-800">
-              <a
-                href="#services"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-lg hover:bg-slate-50"
+              <Link
+                href="/#services"
+                onClick={closeAll}
+                className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50"
               >
-                خدمات المكافحة والرش
-              </a>
-              <a
-                href="#coverage-map"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-lg hover:bg-slate-50"
+                <span className="flex items-center gap-2">
+                  <Layers className="w-4 h-4 text-emerald-700" />
+                  <span>خدمات المكافحة والرش</span>
+                </span>
+                <ChevronLeft className="w-4 h-4 text-slate-400" />
+              </Link>
+
+              <Link
+                href="/#coverage-map"
+                onClick={closeAll}
+                className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50"
               >
-                فروع وتغطية الـ 13 منطقة بالمملكة
-              </a>
-              <a
-                href="#commercial"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-lg hover:bg-slate-50"
+                <span className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-emerald-700" />
+                  <span>تغطية وفروع المدن (15 مدينة)</span>
+                </span>
+                <ChevronLeft className="w-4 h-4 text-slate-400" />
+              </Link>
+
+              <Link
+                href="/#pricing"
+                onClick={closeAll}
+                className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50"
               >
-                عقود المنشآت والشهادات المعتمدة
-              </a>
-              <a
-                href="#warranty-check"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-lg hover:bg-slate-50"
+                <span className="flex items-center gap-2">
+                  <Tag className="w-4 h-4 text-emerald-700" />
+                  <span>باقات الأسعار والضمانات</span>
+                </span>
+                <ChevronLeft className="w-4 h-4 text-slate-400" />
+              </Link>
+
+              <Link
+                href="/#commercial"
+                onClick={closeAll}
+                className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50"
               >
-                فحص سريان الضمان الإلكتروني
-              </a>
-              <a
-                href="#pricing"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-lg hover:bg-slate-50"
+                <span className="flex items-center gap-2">
+                  <Building2 className="w-4 h-4 text-emerald-700" />
+                  <span>عقود الشركات والمنشآت</span>
+                </span>
+                <ChevronLeft className="w-4 h-4 text-slate-400" />
+              </Link>
+
+              <Link
+                href="/#warranty-check"
+                onClick={closeAll}
+                className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50"
               >
-                باقات الأسعار والضمانات
-              </a>
-              <a
-                href="#faq"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-3 py-2 rounded-lg hover:bg-slate-50"
+                <span className="flex items-center gap-2">
+                  <FileCheck2 className="w-4 h-4 text-emerald-700" />
+                  <span>فحص سريان الضمان</span>
+                </span>
+                <ChevronLeft className="w-4 h-4 text-slate-400" />
+              </Link>
+
+              <Link
+                href="/blog"
+                onClick={closeAll}
+                className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50"
               >
-                الأسئلة الشائعة وإرشادات السلامة
-              </a>
+                <span className="flex items-center gap-2">
+                  <BookOpen className="w-4 h-4 text-emerald-700" />
+                  <span>المدونة والاستشارات الفنية</span>
+                </span>
+                <ChevronLeft className="w-4 h-4 text-slate-400" />
+              </Link>
+
+              <Link
+                href="/#faq"
+                onClick={closeAll}
+                className="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-50"
+              >
+                <span className="flex items-center gap-2">
+                  <HelpCircle className="w-4 h-4 text-emerald-700" />
+                  <span>الأسئلة الشائعة</span>
+                </span>
+                <ChevronLeft className="w-4 h-4 text-slate-400" />
+              </Link>
             </div>
 
+            {/* Mobile Call Direct */}
             <div className="pt-2">
               <a
                 href="tel:0558141870"

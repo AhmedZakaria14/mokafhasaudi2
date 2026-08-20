@@ -13,20 +13,14 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
 }) => {
   const isLight = variant === 'light';
 
-  const sizeClasses = {
-    sm: 'h-9 text-base',
-    md: 'h-12 text-lg',
-    lg: 'h-16 text-xl'
-  };
-
   const iconSizes = {
-    sm: 34,
-    md: 44,
-    lg: 56
+    sm: 30,
+    md: 38,
+    lg: 50
   };
 
   return (
-    <div className={`inline-flex items-center gap-3 select-none ${className}`}>
+    <div className={`inline-flex items-center gap-2 sm:gap-2.5 select-none ${className}`}>
       {/* Royal Crest SVG Icon */}
       <div className="relative flex-shrink-0">
         <svg
@@ -35,7 +29,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
           viewBox="0 0 100 100"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="drop-shadow-md"
+          className="drop-shadow-xs"
         >
           {/* Shield Outer */}
           <path
@@ -52,15 +46,14 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
             strokeWidth="1.5"
             strokeDasharray="3 2"
           />
-          {/* Central Palm & Crossed Swords / Protection Symbol */}
-          {/* Palm Trunk & Leaves */}
+          {/* Central Palm & Protection Symbol */}
           <path
             d="M50 32V62M50 38C44 34 38 36 34 42M50 38C56 34 62 36 66 42M50 46C42 43 36 47 32 54M50 46C58 43 64 47 68 54M50 54C43 53 38 58 35 64M50 54C57 53 62 58 65 64"
             stroke="#FBBF24"
             strokeWidth="2.5"
             strokeLinecap="round"
           />
-          {/* Certified Checkmark Ring at base */}
+          {/* Certified Checkmark Ring */}
           <circle cx="50" cy="74" r="9" fill="#047857" stroke="#FBBF24" strokeWidth="1.5" />
           <path
             d="M46 74L49 77L55 70"
@@ -89,26 +82,26 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
         </svg>
       </div>
 
-      {/* Brand Text */}
+      {/* Brand Text - Fully optimized for Mobile without overflowing */}
       <div className="flex flex-col text-right">
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1">
           <span
             className={`font-black tracking-tight leading-none ${
               isLight ? 'text-white' : 'text-slate-900'
-            } ${size === 'sm' ? 'text-lg' : size === 'md' ? 'text-xl' : 'text-2xl'}`}
+            } text-base sm:text-lg md:text-xl whitespace-nowrap`}
           >
             حِـصـن المـمـلـكـة
           </span>
-          <span className="bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/40 text-[10px] font-bold px-1.5 py-0.5 rounded-full">
-            معتمدة SFDA
+          <span className="hidden sm:inline-block bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30 text-[9px] font-bold px-1.5 py-0.2 rounded-full whitespace-nowrap">
+            SFDA
           </span>
         </div>
         <span
-          className={`text-[11px] font-medium leading-tight mt-0.5 ${
+          className={`text-[9px] sm:text-[11px] font-medium leading-tight mt-0.5 whitespace-nowrap overflow-hidden text-ellipsis ${
             isLight ? 'text-emerald-200' : 'text-emerald-700'
           }`}
         >
-          لمكافحة الحشرات والتعقيم ورش المبيدات
+          مكافحة الحشرات والرش المعتمد
         </span>
       </div>
     </div>

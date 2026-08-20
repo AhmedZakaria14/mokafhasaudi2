@@ -6,7 +6,8 @@ import {
   MessageSquare,
   Calculator,
   ShieldCheck,
-  Settings
+  Settings,
+  Sparkles
 } from 'lucide-react';
 
 interface FloatingContactBarProps {
@@ -24,7 +25,7 @@ export const FloatingContactBar: React.FC<FloatingContactBarProps> = ({
 }) => {
   return (
     <>
-      {/* Desktop Floating Badges (Left Side) */}
+      {/* 1. Desktop Floating Quick Badges (Left Side) */}
       <div className="hidden lg:flex fixed left-5 bottom-6 z-40 flex-col gap-2.5">
         {/* Settings button */}
         {onOpenSettings && (
@@ -71,50 +72,59 @@ export const FloatingContactBar: React.FC<FloatingContactBarProps> = ({
         </a>
       </div>
 
-      {/* Mobile Bottom Sticky Bar */}
-      <div className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-2 shadow-2xl">
-        <div className="grid grid-cols-4 gap-1.5 max-w-md mx-auto text-center">
-          {/* Quick Settings */}
+      {/* 2. Mobile Fixed Contact Bar - Perfect Phone Adaptability & Fixed Position */}
+      <div
+        className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-[0_-8px_25px_rgba(0,0,0,0.1)] px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]"
+        style={{ transform: 'translateZ(0)' }}
+      >
+        <div className="grid grid-cols-4 gap-1.5 max-w-lg mx-auto text-center items-center">
+          
+          {/* Quick Settings & Customization */}
           <button
             type="button"
             onClick={onOpenSettings}
-            className="flex flex-col items-center justify-center p-1.5 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 transition text-[10px] font-bold cursor-pointer"
+            className="flex flex-col items-center justify-center py-1.5 px-1 rounded-xl bg-slate-100/90 active:bg-slate-200 text-slate-700 transition cursor-pointer select-none"
+            aria-label="الإعدادات والتخصيص"
           >
             <Settings className="w-4 h-4 text-slate-600 mb-0.5" />
-            <span>التخصيص</span>
+            <span className="text-[10px] font-bold tracking-tight">التخصيص</span>
           </button>
 
-          {/* Quick Calculator */}
+          {/* Quick Calculator Tool */}
           <button
             type="button"
             onClick={onOpenCalculator}
-            className="flex flex-col items-center justify-center p-1.5 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 transition text-[10px] font-bold cursor-pointer"
+            className="flex flex-col items-center justify-center py-1.5 px-1 rounded-xl bg-slate-100/90 active:bg-slate-200 text-slate-700 transition cursor-pointer select-none"
+            aria-label="حاسبة السعر"
           >
             <Calculator className="w-4 h-4 text-emerald-700 mb-0.5" />
-            <span>حاسبة السعر</span>
+            <span className="text-[10px] font-bold tracking-tight">حاسبة السعر</span>
           </button>
 
-          {/* WhatsApp button */}
+          {/* WhatsApp Direct */}
           <a
             href={`https://wa.me/966558141870?text=${encodeURIComponent(
               `السلام عليكم، أرغب بحجز موعد مكافحة حشرات في (${selectedCity}).`
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center justify-center p-1.5 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 transition text-[10px] font-bold"
+            className="flex flex-col items-center justify-center py-1.5 px-1 rounded-xl bg-emerald-50 active:bg-emerald-100 text-emerald-800 border border-emerald-200 transition select-none"
+            aria-label="محادثة واتساب"
           >
             <MessageSquare className="w-4 h-4 text-emerald-700 mb-0.5" />
-            <span>واتساب</span>
+            <span className="text-[10px] font-bold tracking-tight">واتساب</span>
           </a>
 
-          {/* Call button */}
+          {/* Call Immediate */}
           <a
             href="tel:0558141870"
-            className="flex flex-col items-center justify-center p-1.5 rounded-xl bg-emerald-700 text-white shadow-sm transition text-[10px] font-bold"
+            className="flex flex-col items-center justify-center py-1.5 px-1 rounded-xl bg-emerald-700 active:bg-emerald-800 text-white shadow-sm transition select-none"
+            aria-label="اتصال فوري"
           >
-            <PhoneCall className="w-4 h-4 mb-0.5" />
-            <span>اتصال فوري</span>
+            <PhoneCall className="w-4 h-4 mb-0.5 animate-pulse" />
+            <span className="text-[10px] font-bold tracking-tight">اتصال فوري</span>
           </a>
+
         </div>
       </div>
     </>

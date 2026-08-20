@@ -30,10 +30,10 @@ export const WarrantyVerifier: React.FC = () => {
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
             <span>خدمة متابعة الضمان للعملاء</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-black">
+          <h2 className="text-2xl sm:text-3xl font-black text-white">
             الاستعلام عن سريان الضمان ومواعيد المتابعة
           </h2>
-          <p className="text-xs sm:text-sm text-slate-400 mt-2">
+          <p className="text-xs sm:text-sm text-slate-300 mt-2 font-medium">
             أدخل رقم جوالك المسجل أثناء تنفيذ الخدمة للتواصل المباشر مع الدعم الفني وتنسيق زيارات المتابعة الدورية المجانية.
           </p>
         </div>
@@ -51,11 +51,11 @@ export const WarrantyVerifier: React.FC = () => {
                 if (submitted) setSubmitted(false);
               }}
               required
-              className="flex-1 bg-slate-800 border border-slate-700 rounded-2xl px-4 py-3.5 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-emerald-500 font-mono text-center sm:text-right font-bold"
+              className="flex-1 bg-slate-800 border border-slate-600 rounded-2xl px-4 py-3.5 text-sm text-white placeholder-slate-400 focus:outline-none focus:border-emerald-400 font-mono text-center sm:text-right font-bold"
             />
             <button
               type="submit"
-              className="px-6 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-2xl transition flex items-center justify-center gap-1.5 shadow-lg cursor-pointer"
+              className="px-6 py-3.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm rounded-2xl transition flex items-center justify-center gap-1.5 shadow-lg cursor-pointer active:scale-95"
             >
               <Search className="w-4 h-4" />
               <span>متابعة الضمان</span>

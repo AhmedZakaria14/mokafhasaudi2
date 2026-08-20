@@ -45,16 +45,16 @@ export const CommercialSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           {/* Info Column */}
           <div className="lg:col-span-7 text-right space-y-4">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-full text-xs font-bold">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-100 text-emerald-900 border border-emerald-300 rounded-full text-xs font-bold">
               <Building2 className="w-4 h-4 text-emerald-700" />
               <span>قطاع الأعمال والشركات والمطاعم</span>
             </span>
 
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 leading-tight">
-              عقود مكافحة حشرات دورية معتمدة لاشتراطات <span className="text-emerald-700">الأمانات والبلديات</span> وهيئة الغذاء والدواء
+              عقود مكافحة حشرات دورية معتمدة لاشتراطات <span className="text-emerald-800 underline decoration-amber-400 decoration-4 underline-offset-4">الأمانات والبلديات</span> وهيئة الغذاء والدواء
             </h2>
 
-            <p className="text-sm text-slate-600 leading-relaxed">
+            <p className="text-sm text-slate-700 leading-relaxed font-medium">
               نوفر برامج مكافحة وقائية متقدمة مطابقة لاشتراطات وزارة الشؤون البلدية والقروية والإسكان، الهيئة العامة للغذاء والدواء، ونظام الهاسب (HACCP) لجميع المنشآت والمستودعات والمصانع في كافة مدن المملكة.
             </p>
 
@@ -64,7 +64,7 @@ export const CommercialSection: React.FC = () => {
                 <FileCheck2 className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
                 <div>
                   <strong className="block text-slate-900 font-bold mb-0.5">عقود دورية موثقة للمنشآت</strong>
-                  <span className="text-slate-500">عقود سنوية وزيارات مجدولة مطابقة للاشتراطات الصحية.</span>
+                  <span className="text-slate-600 font-medium">عقود سنوية وزيارات مجدولة مطابقة للاشتراطات الصحية.</span>
                 </div>
               </div>
 
@@ -72,7 +72,7 @@ export const CommercialSection: React.FC = () => {
                 <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
                 <div>
                   <strong className="block text-slate-900 font-bold mb-0.5">سجل زيارات ميداني موثق</strong>
-                  <span className="text-slate-500">تقارير دورية موقعة من المهندس المشرف لكل زيارة.</span>
+                  <span className="text-slate-600 font-medium">تقارير دورية موقعة من المهندس المشرف لكل زيارة.</span>
                 </div>
               </div>
 
@@ -80,7 +80,7 @@ export const CommercialSection: React.FC = () => {
                 <Award className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
                 <div>
                   <strong className="block text-slate-900 font-bold mb-0.5">مبيدات مخصصة للمطابخ والمستودعات</strong>
-                  <span className="text-slate-500">جل ألماني بدون رائحة وآمن 100% على المواد الغذائية.</span>
+                  <span className="text-slate-600 font-medium">جل ألماني بدون رائحة وآمن 100% على المواد الغذائية.</span>
                 </div>
               </div>
 
@@ -88,7 +88,7 @@ export const CommercialSection: React.FC = () => {
                 <PhoneCall className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
                 <div>
                   <strong className="block text-slate-900 font-bold mb-0.5">استجابة طوارئ خلال 12 ساعة</strong>
-                  <span className="text-slate-500">زيارات طارئة غير محدودة مجاناً طوال فترة سريان العقد.</span>
+                  <span className="text-slate-600 font-medium">زيارات طارئة غير محدودة مجاناً طوال فترة سريان العقد.</span>
                 </div>
               </div>
             </div>

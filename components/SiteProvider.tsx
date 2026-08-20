@@ -5,7 +5,7 @@ import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { FloatingContactBar } from '@/components/FloatingContactBar';
 import { QuickServicesSidebar } from '@/components/QuickServicesSidebar';
-import { QuickSettingsDrawer } from '@/components/QuickSettingsDrawer';
+import { SettingsPanel } from '@/components/SettingsPanel';
 import { CostCalculator } from '@/components/CostCalculator';
 import { AiConsultantModal } from '@/components/AiConsultantModal';
 import { SAUDI_CITIES } from '@/data/regions';
@@ -15,7 +15,7 @@ interface SiteContextType {
   setSelectedCity: (cityId: string) => void;
   openCalculator: (coupon?: string) => void;
   openAiConsultant: () => void;
-  openSettingsDrawer: () => void;
+  openSettingsPanel: () => void;
 }
 
 const SiteContext = createContext<SiteContextType>({
@@ -23,7 +23,7 @@ const SiteContext = createContext<SiteContextType>({
   setSelectedCity: () => {},
   openCalculator: () => {},
   openAiConsultant: () => {},
-  openSettingsDrawer: () => {}
+  openSettingsPanel: () => {}
 });
 
 export const useSite = () => useContext(SiteContext);
@@ -46,7 +46,7 @@ export const SiteProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setIsAiConsultantOpen(true);
   };
 
-  const openSettingsDrawer = () => {
+  const openSettingsPanel = () => {
     setIsSettingsOpen(true);
   };
 
@@ -59,21 +59,21 @@ export const SiteProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setSelectedCity,
         openCalculator,
         openAiConsultant,
-        openSettingsDrawer
+        openSettingsPanel
       }}
     >
-      <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col justify-between selection:bg-emerald-600 selection:text-white">
-        {/* Global Unified Header with Integrated Settings Trigger */}
+      <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col justify-between selection:bg-emerald-600 selection:text-white relative">
+        {/* Global Fixed Header with Integrated Settings Trigger */}
         <Navbar
           selectedCity={selectedCity}
           onSelectCity={setSelectedCity}
           onOpenCalculator={() => openCalculator()}
           onOpenAiConsultant={openAiConsultant}
-          onOpenSettings={openSettingsDrawer}
+          onOpenSettings={openSettingsPanel}
         />
 
-        {/* Page Content */}
-        <div className="flex-1 w-full">{children}</div>
+        {/* Page Content with top padding to account for fixed header + bottom padding for mobile fixed contact bar */}
+        <div className="flex-1 w-full pt-[75px] sm:pt-[84px] pb-16 lg:pb-0">{children}</div>
 
         {/* Global Unified Footer */}
         <Footer
@@ -87,16 +87,16 @@ export const SiteProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           selectedCity={currentCityObj.name}
         />
 
-        {/* Global Mobile Bottom Action Bar */}
+        {/* Global Mobile Bottom Fixed Action Bar & Floating ⚙️ Settings Trigger */}
         <FloatingContactBar
           selectedCity={currentCityObj.name}
           onOpenCalculator={() => openCalculator()}
           onOpenAiConsultant={openAiConsultant}
-          onOpenSettings={openSettingsDrawer}
+          onOpenSettings={openSettingsPanel}
         />
 
-        {/* Global Secondary Settings & Regional Customization Drawer */}
-        <QuickSettingsDrawer
+        {/* Consolidated SettingsPanel with Progressive Disclosure */}
+        <SettingsPanel
           isOpen={isSettingsOpen}
           onClose={() => setIsSettingsOpen(false)}
           selectedCity={selectedCity}

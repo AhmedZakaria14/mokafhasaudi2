@@ -9,16 +9,19 @@ import {
   Award,
   PhoneCall,
   ChevronLeft,
-  Zap
+  Zap,
+  Settings
 } from 'lucide-react';
 
 interface PricingSectionProps {
   onOpenCalculator: () => void;
+  onOpenSettings?: () => void;
   selectedCity: string;
 }
 
 export const PricingSection: React.FC<PricingSectionProps> = ({
   onOpenCalculator,
+  onOpenSettings,
   selectedCity
 }) => {
   return (
@@ -32,13 +35,13 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           transition={{ duration: 0.5, ease: 'easeOut' }}
           className="text-center max-w-3xl mx-auto mb-12"
         >
-          <span className="text-xs font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-3 py-1 rounded-full inline-block">
+          <span className="text-xs font-bold text-emerald-900 bg-emerald-100 border border-emerald-300 px-3.5 py-1 rounded-full inline-block">
             شفافية كاملة وباقات معتمدة
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 mt-2">
             باقات مكافحة الحشرات والضمان المعتمد
           </h2>
-          <p className="text-sm sm:text-base text-slate-600 mt-2">
+          <p className="text-sm sm:text-base text-slate-700 mt-2 font-medium">
             اختر الباقة المناسبة لعقارك مع ضمان كتابي موثق وزيارات متابعة مشمولة طوال فترة السريان.
           </p>
         </motion.div>
@@ -61,7 +64,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                 whileHover={{ y: -6, transition: { duration: 0.2 } }}
                 className={`rounded-3xl p-6 text-right flex flex-col justify-between transition-all duration-200 relative ${
                   isPopular
-                    ? 'bg-emerald-900 text-white border-2 border-emerald-700 shadow-xl'
+                    ? 'bg-emerald-950 text-white border-2 border-emerald-500 shadow-xl'
                     : 'bg-white text-slate-900 border border-slate-200 shadow-sm hover:shadow-md'
                 }`}
               >
@@ -80,15 +83,15 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
                 <div>
                   <h3
-                    className={`text-lg font-bold mb-1 ${
+                    className={`text-lg font-black mb-1 ${
                       isPopular ? 'text-white' : 'text-slate-900'
                     }`}
                   >
                     {pkg.name}
                   </h3>
                   <p
-                    className={`text-xs mb-4 ${
-                      isPopular ? 'text-emerald-100' : 'text-slate-500'
+                    className={`text-xs mb-4 font-medium ${
+                      isPopular ? 'text-emerald-200' : 'text-slate-600'
                     }`}
                   >
                     {pkg.targetAudience}
@@ -99,16 +102,16 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                       <span className="text-xs font-semibold">تبدأ من</span>
                       <span
                         className={`text-3xl font-black font-mono ${
-                          isPopular ? 'text-amber-300' : 'text-emerald-800'
+                          isPopular ? 'text-amber-300' : 'text-emerald-900'
                         }`}
                       >
                         {pkg.price}
                       </span>
-                      <span className="text-xs">ر.س</span>
+                      <span className="text-xs font-bold">ر.س</span>
                     </div>
                     <span
-                      className={`text-[11px] block mt-1 ${
-                        isPopular ? 'text-emerald-200' : 'text-slate-500'
+                      className={`text-[11px] block mt-1 font-medium ${
+                        isPopular ? 'text-emerald-200' : 'text-slate-600'
                       }`}
                     >
                       {pkg.period}
@@ -119,8 +122,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                   <div
                     className={`p-2.5 rounded-xl text-xs font-bold mb-4 flex items-center gap-1.5 ${
                       isPopular
-                        ? 'bg-emerald-800/80 text-emerald-100'
-                        : 'bg-emerald-50 text-emerald-900'
+                        ? 'bg-emerald-900 text-emerald-100 border border-emerald-700'
+                        : 'bg-emerald-50 text-emerald-900 border border-emerald-200'
                     }`}
                   >
                     <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
@@ -128,7 +131,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
                   </div>
 
                   {/* Features */}
-                  <div className="space-y-2 mb-6 text-xs">
+                  <div className="space-y-2 mb-6 text-xs font-medium">
                     {pkg.features.map((feature, fIdx) => (
                       <div key={fIdx} className="flex items-start gap-2">
                         <CheckCircle2
@@ -164,14 +167,25 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
           })}
         </div>
 
-        <div className="mt-10 text-center">
-          <button
-            onClick={onOpenCalculator}
-            className="inline-flex items-center gap-2 text-xs font-bold text-emerald-800 bg-white hover:bg-emerald-50 border border-emerald-300 px-5 py-2.5 rounded-xl transition cursor-pointer shadow-sm"
-          >
-            <span>هل مساحة عقارك كبيرة؟ استخدم حاسبة التكلفة الدقيقة</span>
-            <ChevronLeft className="w-4 h-4" />
-          </button>
+        {/* Progressive Disclosure Secondary Actions */}
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+          {onOpenSettings ? (
+            <button
+              onClick={onOpenSettings}
+              className="inline-flex items-center gap-2 text-xs font-bold text-slate-700 bg-white hover:bg-slate-100 border border-slate-300 px-5 py-2.5 rounded-xl transition cursor-pointer shadow-xs"
+            >
+              <Settings className="w-4 h-4 text-slate-600" />
+              <span>مقارنة تفصيلية وتخصيص الباقات في لوحة الإعدادات</span>
+            </button>
+          ) : (
+            <button
+              onClick={onOpenCalculator}
+              className="inline-flex items-center gap-2 text-xs font-bold text-emerald-800 bg-white hover:bg-emerald-50 border border-emerald-300 px-5 py-2.5 rounded-xl transition cursor-pointer shadow-xs"
+            >
+              <span>هل مساحة عقارك كبيرة؟ استخدم حاسبة التكلفة الدقيقة</span>
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+          )}
         </div>
       </div>
     </section>

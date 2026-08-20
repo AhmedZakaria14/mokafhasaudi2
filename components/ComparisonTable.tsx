@@ -55,26 +55,26 @@ export const ComparisonTable: React.FC = () => {
     <section className="py-16 bg-white text-slate-900 border-b border-slate-200">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-10">
-          <span className="text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
+          <span className="text-xs font-bold text-emerald-900 bg-emerald-100 border border-emerald-300 px-3.5 py-1 rounded-full">
             معايير الجودة والاعتماد
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 mt-2">
             لماذا تختار مؤسسة حصن المملكة المعتمدة؟
           </h2>
-          <p className="text-sm text-slate-600 mt-2">
+          <p className="text-sm text-slate-700 mt-2 font-medium">
             مقارنة واقعية توضح الفارق الجذري بين المعالجة الهندسية المرخصة والعمالة غير المصنفة في السوق.
           </p>
         </div>
 
         {/* Table Container */}
         <div className="bg-slate-50 border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
-          <div className="grid grid-cols-12 bg-slate-100 p-4 border-b border-slate-200 text-xs font-bold text-slate-700 text-right">
-            <div className="col-span-5 sm:col-span-4">معيار الخدمة والأمان</div>
-            <div className="col-span-4 sm:col-span-4 text-emerald-800 font-extrabold flex items-center gap-1.5">
+          <div className="grid grid-cols-12 bg-slate-100 p-4 border-b border-slate-200 text-xs font-bold text-slate-800 text-right">
+            <div className="col-span-5 sm:col-span-4 font-black">معيار الخدمة والأمان</div>
+            <div className="col-span-4 sm:col-span-4 text-emerald-900 font-black flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-emerald-700" />
               <span>مؤسسة حصن المملكة المعتمدة</span>
             </div>
-            <div className="col-span-3 sm:col-span-4 text-slate-500">
+            <div className="col-span-3 sm:col-span-4 text-slate-700 font-bold">
               العمالة غير المرخصة
             </div>
           </div>
@@ -85,17 +85,17 @@ export const ComparisonTable: React.FC = () => {
                 key={idx}
                 className="grid grid-cols-12 p-4 items-center gap-2 hover:bg-white transition text-right"
               >
-                <div className="col-span-5 sm:col-span-4 font-bold text-slate-900 leading-snug">
+                <div className="col-span-5 sm:col-span-4 font-black text-slate-900 leading-snug">
                   {item.feature}
                 </div>
 
-                <div className="col-span-4 sm:col-span-4 text-slate-700 leading-relaxed flex items-start gap-1.5">
+                <div className="col-span-4 sm:col-span-4 text-slate-800 leading-relaxed flex items-start gap-1.5">
                   <Check className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
-                  <span className="font-medium text-slate-800">{item.hosn}</span>
+                  <span className="font-bold text-slate-900">{item.hosn}</span>
                 </div>
 
-                <div className="col-span-3 sm:col-span-4 text-slate-500 leading-relaxed flex items-start gap-1.5">
-                  <X className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
+                <div className="col-span-3 sm:col-span-4 text-slate-600 leading-relaxed flex items-start gap-1.5 font-medium">
+                  <X className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
                   <span>{item.others}</span>
                 </div>
               </div>

@@ -43,7 +43,7 @@ export const AccreditationStrip: React.FC = () => {
     <section className="bg-slate-100 py-10 border-b border-slate-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-6">
-          <span className="text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
+          <span className="text-xs font-bold text-emerald-900 bg-emerald-100 border border-emerald-300 px-3.5 py-1 rounded-full">
             معايير الجودة والاعتماد الوطني
           </span>
         </div>
@@ -56,22 +56,22 @@ export const AccreditationStrip: React.FC = () => {
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-2">
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900">
+                  <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300">
                     {item.badge}
                   </span>
                   <BadgeCheck className="w-5 h-5 text-emerald-700" />
                 </div>
-                <h4 className="font-bold text-sm text-slate-900 mb-1">
+                <h4 className="font-black text-sm text-slate-900 mb-1">
                   {item.title}
                 </h4>
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-xs text-slate-700 leading-relaxed font-medium">
                   {item.subtitle}
                 </p>
               </div>
 
-              <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px] text-emerald-800 font-semibold">
+              <div className="mt-3 pt-2.5 border-t border-slate-200 flex items-center justify-between text-[11px] text-emerald-900 font-bold">
                 <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
                   <span>{item.feature}</span>
                 </span>
               </div>

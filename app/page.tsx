@@ -20,7 +20,7 @@ import { FaqSection } from '@/components/FaqSection';
 import { useSite } from '@/components/SiteProvider';
 
 export default function HomePage() {
-  const { selectedCity, setSelectedCity, openCalculator, openAiConsultant } = useSite();
+  const { selectedCity, setSelectedCity, openCalculator, openAiConsultant, openSettingsPanel } = useSite();
 
   return (
     <main className="w-full flex flex-col relative">
@@ -30,12 +30,13 @@ export default function HomePage() {
         onSelectCity={setSelectedCity}
         onOpenCalculator={() => openCalculator()}
         onOpenAiConsultant={openAiConsultant}
+        onOpenSettings={openSettingsPanel}
       />
 
       {/* 2. Official Regulatory Accreditation Strip */}
       <AccreditationStrip />
 
-      {/* 3. Limited-Time Offer Banner with Collapsible/Claim coupon */}
+      {/* 3. Limited-Time Offer Banner */}
       <div className="pt-6 bg-slate-100">
         <LimitedTimeOfferBanner
           selectedCity={selectedCity}
@@ -79,6 +80,7 @@ export default function HomePage() {
       <PricingSection
         selectedCity={selectedCity}
         onOpenCalculator={() => openCalculator()}
+        onOpenSettings={openSettingsPanel}
       />
 
       {/* 13. Electronic Warranty Verification Tool */}

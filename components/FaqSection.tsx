@@ -65,14 +65,14 @@ export const FaqSection: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-full text-xs font-bold mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-100 text-emerald-900 border border-emerald-300 rounded-full text-xs font-bold mb-3">
             <HelpCircle className="w-4 h-4 text-emerald-700" />
             <span>الأسئلة الشائعة والإجابات المعتمدة</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
             كل ما تود معرفته عن خدمات مكافحة الحشرات والضمانات
           </h2>
-          <p className="text-xs sm:text-sm text-slate-600 mt-2">
+          <p className="text-xs sm:text-sm text-slate-700 mt-2 font-medium">
             إجابات واضحة ومباشرة على أكثر استفسارات عملائنا في المملكة العربية السعودية.
           </p>
         </div>
@@ -84,9 +84,9 @@ export const FaqSection: React.FC = () => {
             placeholder="ابحث في الأسئلة الشائعة (مثلاً: أمان المبيدات، مدة الضمان، التراخيص...)"
             value={searchFaq}
             onChange={(e) => setSearchFaq(e.target.value)}
-            className="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 pr-10 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-600 font-medium"
+            className="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 pr-10 text-xs sm:text-sm text-slate-900 placeholder-slate-500 focus:outline-none focus:border-emerald-600 font-medium"
           />
-          <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-3.5" />
+          <Search className="w-4 h-4 text-slate-500 absolute right-3.5 top-3.5" />
         </div>
 
         {/* Accordion List */}
@@ -101,16 +101,16 @@ export const FaqSection: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className="w-full p-4 sm:p-5 flex items-center justify-between text-right bg-slate-50/70 hover:bg-slate-100 transition text-slate-900 font-bold text-xs sm:text-sm cursor-pointer"
+                  className="w-full p-4 sm:p-5 flex items-center justify-between text-right bg-slate-50 hover:bg-slate-100 transition text-slate-900 font-bold text-xs sm:text-sm cursor-pointer"
                 >
-                  <span className="flex-1 pl-4 leading-snug">{faq.q}</span>
+                  <span className="flex-1 pl-4 leading-snug font-black text-slate-900">{faq.q}</span>
                   <span className="text-emerald-700 shrink-0">
                     {isOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
                   </span>
                 </button>
 
                 {isOpen && (
-                  <div className="p-4 sm:p-5 bg-white border-t border-slate-200 text-xs sm:text-sm text-slate-600 leading-relaxed animate-in fade-in">
+                  <div className="p-4 sm:p-5 bg-white border-t border-slate-200 text-xs sm:text-sm text-slate-700 leading-relaxed font-medium animate-in fade-in">
                     {faq.a}
                   </div>
                 )}
@@ -120,15 +120,15 @@ export const FaqSection: React.FC = () => {
         </div>
 
         {/* Still have questions banner */}
-        <div className="mt-10 bg-emerald-50 border border-emerald-200 rounded-3xl p-6 text-center text-emerald-950 space-y-3">
-          <h4 className="font-black text-base">لديك استفسار مخصص عن حالة منزلك أو منشأتك؟</h4>
-          <p className="text-xs text-emerald-800 max-w-lg mx-auto">
+        <div className="mt-10 bg-emerald-50 border border-emerald-300 rounded-3xl p-6 text-center text-emerald-950 space-y-3">
+          <h4 className="font-black text-base text-slate-950">لديك استفسار مخصص عن حالة منزلك أو منشأتك؟</h4>
+          <p className="text-xs sm:text-sm text-emerald-900 max-w-lg mx-auto font-medium">
             مستشارونا متاحون للرد على كافة أسئلتكم وتقديم النصائح الفنية والأسعار على مدار الساعة.
           </p>
           <div className="flex flex-wrap justify-center gap-3 pt-1">
             <a
               href="tel:0558141870"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl shadow transition"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl shadow transition active:scale-95"
             >
               <PhoneCall className="w-4 h-4" />
               <span>اتصال فوري: 0558141870</span>

@@ -52,7 +52,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 20);
+          setIsScrolled(window.scrollY > 15);
           ticking = false;
         });
         ticking = true;
@@ -86,23 +86,24 @@ export const Navbar: React.FC<NavbarProps> = ({
   const currentCityObj = SAUDI_CITIES.find((c) => c.id === selectedCity) || SAUDI_CITIES[0];
 
   return (
-    <header className="sticky top-0 z-50 w-full" ref={navRef}>
-      {/* 1. Slim Official Badge Strip */}
-      <div className="bg-slate-950 text-white text-[11px] py-1.5 px-4 border-b border-emerald-950/40">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3 text-emerald-300 font-medium overflow-hidden text-ellipsis whitespace-nowrap">
-            <span className="flex items-center gap-1 text-white font-bold">
+    <header className="fixed top-0 inset-x-0 z-50 w-full select-none" ref={navRef}>
+      {/* 1. Slim Official Regulatory Badge Strip */}
+      <div className="bg-slate-950 text-white text-[11px] py-1 px-3 sm:px-4 border-b border-emerald-950/40">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
+          {/* Left info badge */}
+          <div className="flex items-center gap-2 text-emerald-300 font-medium overflow-hidden text-ellipsis whitespace-nowrap min-w-0">
+            <span className="flex items-center gap-1 text-white font-bold shrink-0">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>مؤسسة معتمدة SFDA وبلدي</span>
+              <span className="text-[10px] sm:text-[11px]">معتمدة SFDA وبلدي</span>
             </span>
             <span className="text-slate-600 hidden sm:inline">•</span>
-            <span className="hidden sm:inline text-slate-300">مبيدات آمنة 100% بدون رائحة</span>
+            <span className="hidden sm:inline text-slate-300 text-[11px]">مبيدات آمنة 100% بدون مغادرة</span>
             <span className="text-slate-600 hidden md:inline">•</span>
-            <span className="hidden md:inline text-amber-300">ضمان حتى 15 سنة</span>
+            <span className="hidden md:inline text-amber-300 text-[11px]">ضمان حتى 15 سنة</span>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
-            {/* Quick Settings Action in top bar */}
+          {/* Right quick phone / settings */}
+          <div className="flex items-center gap-1.5 shrink-0">
             {onOpenSettings && (
               <button
                 type="button"
@@ -117,30 +118,31 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <a
               href="tel:0558141870"
-              className="flex items-center gap-1.5 bg-emerald-700 hover:bg-emerald-600 text-white px-2.5 py-0.5 rounded-full text-[11px] font-bold transition shadow-xs"
+              className="flex items-center gap-1 bg-emerald-700 hover:bg-emerald-600 text-white px-2 py-0.5 rounded-full text-[10px] sm:text-[11px] font-bold transition shadow-xs"
             >
-              <PhoneCall className="w-3 h-3" />
+              <PhoneCall className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
               <span className="font-mono font-bold" dir="ltr">0558141870</span>
             </a>
           </div>
         </div>
       </div>
 
-      {/* 2. Main Navigation Bar */}
+      {/* 2. Main Navigation Bar with Pure Responsiveness */}
       <nav
-        className={`w-full bg-white/95 backdrop-blur-md transition-all duration-200 border-b border-slate-200 ${
-          isScrolled ? 'py-2.5 shadow-md shadow-slate-900/5' : 'py-3.5'
+        className={`w-full bg-white/95 backdrop-blur-md transition-all duration-200 border-b border-slate-200 shadow-xs ${
+          isScrolled ? 'py-1.5 sm:py-2' : 'py-2 sm:py-3'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
-          {/* Logo */}
-          <Link href="/" onClick={closeAll} className="shrink-0 flex items-center">
-            <BrandLogo variant="dark" size={isScrolled ? 'sm' : 'md'} />
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-4">
+          
+          {/* Logo Container */}
+          <Link href="/" onClick={closeAll} className="shrink-0 flex items-center min-w-0">
+            <BrandLogo variant="dark" size="sm" />
           </Link>
 
           {/* Desktop Navigation Links */}
           <div className="hidden lg:flex items-center gap-1 xl:gap-2 text-xs xl:text-sm font-bold text-slate-700">
-            {/* 1. Primary Action: Services Dropdown */}
+            {/* Services Dropdown */}
             <div
               className="relative"
               onMouseEnter={() => { setServicesDropdown(true); setCitiesDropdown(false); setMoreDropdown(false); }}
@@ -157,7 +159,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${servicesDropdown ? 'rotate-180' : ''}`} />
               </button>
 
-              {/* Clean Services Dropdown Menu */}
               {servicesDropdown && (
                 <div className="absolute right-0 top-full mt-1 w-72 bg-white border border-slate-200 rounded-2xl shadow-xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150 text-right">
                   <div className="text-[11px] font-bold text-slate-400 px-3 py-1 mb-1">
@@ -190,7 +191,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </div>
 
-            {/* 2. Primary Action: Cities & Branches Dropdown */}
+            {/* Cities Dropdown */}
             <div
               className="relative"
               onMouseEnter={() => { setCitiesDropdown(true); setServicesDropdown(false); setMoreDropdown(false); }}
@@ -208,12 +209,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${citiesDropdown ? 'rotate-180' : ''}`} />
               </button>
 
-              {/* Clean Cities Dropdown Menu */}
               {citiesDropdown && (
                 <div className="absolute right-0 top-full mt-1 w-64 bg-white border border-slate-200 rounded-2xl shadow-xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150 text-right">
                   <div className="text-[11px] font-bold text-slate-400 px-3 py-1 mb-1 flex items-center justify-between">
                     <span>فروع الاستجابة الفورية:</span>
-                    <span className="text-[10px] text-emerald-700">25 دقيقة</span>
+                    <span className="text-[10px] text-emerald-700 font-bold">25 دقيقة</span>
                   </div>
                   <div className="grid grid-cols-2 gap-1">
                     {SAUDI_CITIES.slice(0, 10).map((city) => (
@@ -247,7 +247,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </div>
 
-            {/* 3. Primary Action: Pricing Packages */}
+            {/* Pricing Packages */}
             <Link
               href="/#pricing"
               onClick={closeAll}
@@ -256,7 +256,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               باقات الأسعار
             </Link>
 
-            {/* 4. Primary Action: Commercial B2B */}
+            {/* Commercial */}
             <Link
               href="/#commercial"
               onClick={closeAll}
@@ -265,7 +265,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               عقود الشركات
             </Link>
 
-            {/* 5. Progressive Disclosure: "المزيد" More Options Dropdown */}
+            {/* More Menu */}
             <div
               className="relative"
               onMouseEnter={() => { setMoreDropdown(true); setServicesDropdown(false); setCitiesDropdown(false); }}
@@ -282,7 +282,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform ${moreDropdown ? 'rotate-180' : ''}`} />
               </button>
 
-              {/* More Grouped Dropdown */}
               {moreDropdown && (
                 <div className="absolute right-0 top-full mt-1 w-56 bg-white border border-slate-200 rounded-2xl shadow-xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150 text-right">
                   <Link
@@ -325,14 +324,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
 
-          {/* Action CTAs */}
-          <div className="flex items-center gap-2">
-            {/* Secondary Settings Icon */}
+          {/* Action CTAs - Responsive without any overflowing */}
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            {/* Desktop Settings Icon */}
             {onOpenSettings && (
               <button
                 type="button"
                 onClick={onOpenSettings}
-                className="p-2 rounded-xl text-slate-700 hover:text-emerald-900 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition cursor-pointer active:scale-95"
+                className="hidden md:inline-flex p-2 rounded-xl text-slate-700 hover:text-emerald-900 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition cursor-pointer active:scale-95"
                 title="لوحة الإعدادات والتخصيص"
                 aria-label="الإعدادات والتخصيص"
               >
@@ -340,20 +339,20 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
             )}
 
-            {/* AI Diagnosis */}
+            {/* Desktop AI Diagnosis */}
             <button
               type="button"
               onClick={() => {
                 if (onOpenAiConsultant) onOpenAiConsultant();
                 closeAll();
               }}
-              className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-emerald-900 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition cursor-pointer"
+              className="hidden lg:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-emerald-900 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
               <span>طبيب الآفات</span>
             </button>
 
-            {/* Calculator Button */}
+            {/* Desktop Calculator Button */}
             <button
               type="button"
               onClick={() => {
@@ -366,20 +365,21 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>حاسبة التكلفة</span>
             </button>
 
-            {/* Call Direct */}
+            {/* Call Direct - Perfectly Fitted on Mobile */}
             <a
               href="tel:0558141870"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 shadow-sm transition"
+              className="inline-flex items-center gap-1 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-800 shadow-xs transition active:scale-95 shrink-0"
+              aria-label="طلب رش فوري"
             >
-              <PhoneCall className="w-3.5 h-3.5" />
-              <span>طلب رش فوري</span>
+              <PhoneCall className="w-3.5 h-3.5 shrink-0" />
+              <span className="whitespace-nowrap">طلب رش</span>
             </a>
 
             {/* Mobile Menu Toggle */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 border border-slate-200 cursor-pointer"
+              className="lg:hidden p-1.5 sm:p-2 rounded-xl text-slate-700 hover:bg-slate-100 border border-slate-200 cursor-pointer active:scale-95 shrink-0"
               aria-label="القائمة"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -389,15 +389,15 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Mobile Clean Drawer Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-white border-t border-slate-200 px-4 pt-3 pb-6 space-y-3 animate-in fade-in slide-in-from-top-2 duration-150 text-right">
-            {/* Quick Actions */}
+          <div className="lg:hidden bg-white border-t border-slate-200 px-4 pt-3 pb-6 space-y-3 animate-in fade-in slide-in-from-top-2 duration-150 text-right max-h-[75vh] overflow-y-auto">
+            {/* Quick Actions in Mobile Menu */}
             <div className="grid grid-cols-3 gap-2 pb-3 border-b border-slate-100">
               <button
                 onClick={() => {
                   if (onOpenCalculator) onOpenCalculator();
                   closeAll();
                 }}
-                className="flex flex-col items-center justify-center p-2 rounded-xl bg-slate-100 text-slate-800 text-[11px] font-bold hover:bg-slate-200"
+                className="flex flex-col items-center justify-center p-2 rounded-xl bg-slate-100 text-slate-800 text-[11px] font-bold hover:bg-slate-200 cursor-pointer"
               >
                 <Calculator className="w-4 h-4 text-emerald-700 mb-0.5" />
                 <span>حاسبة السعر</span>
@@ -408,7 +408,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   if (onOpenAiConsultant) onOpenAiConsultant();
                   closeAll();
                 }}
-                className="flex flex-col items-center justify-center p-2 rounded-xl bg-emerald-50 text-emerald-900 border border-emerald-200 text-[11px] font-bold hover:bg-emerald-100"
+                className="flex flex-col items-center justify-center p-2 rounded-xl bg-emerald-50 text-emerald-900 border border-emerald-200 text-[11px] font-bold hover:bg-emerald-100 cursor-pointer"
               >
                 <Sparkles className="w-4 h-4 text-emerald-700 mb-0.5" />
                 <span>طبيب الآفات</span>
@@ -419,7 +419,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   if (onOpenSettings) onOpenSettings();
                   closeAll();
                 }}
-                className="flex flex-col items-center justify-center p-2 rounded-xl bg-slate-100 text-slate-800 text-[11px] font-bold hover:bg-slate-200"
+                className="flex flex-col items-center justify-center p-2 rounded-xl bg-slate-100 text-slate-800 text-[11px] font-bold hover:bg-slate-200 cursor-pointer"
               >
                 <Settings className="w-4 h-4 text-slate-700 mb-0.5" />
                 <span>الإعدادات</span>
@@ -513,7 +513,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </Link>
             </div>
 
-            {/* Mobile Call Direct */}
+            {/* Mobile Direct Call Button */}
             <div className="pt-2">
               <a
                 href="tel:0558141870"

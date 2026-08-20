@@ -11,7 +11,7 @@ import {
   Calculator,
   MapPin,
   ChevronDown,
-  Sparkles,
+  ClipboardCheck,
   Layers,
   Building2,
   FileCheck2,
@@ -94,7 +94,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center gap-2 text-emerald-300 font-medium overflow-hidden text-ellipsis whitespace-nowrap min-w-0">
             <span className="flex items-center gap-1 text-white font-bold shrink-0">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span className="text-[10px] sm:text-[11px]">معتمدة SFDA وبلدي</span>
+              <span className="text-[10px] sm:text-[11px]">معتمدة SFDA والأمانات</span>
             </span>
             <span className="text-slate-600 hidden sm:inline">•</span>
             <span className="hidden sm:inline text-slate-300 text-[11px]">مبيدات آمنة 100% بدون مغادرة</span>
@@ -339,17 +339,17 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
             )}
 
-            {/* Desktop AI Diagnosis */}
+            {/* Desktop Consultation */}
             <button
               type="button"
               onClick={() => {
                 if (onOpenAiConsultant) onOpenAiConsultant();
                 closeAll();
               }}
-              className="hidden lg:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-emerald-900 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition cursor-pointer"
+              className="hidden lg:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-emerald-950 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 transition cursor-pointer"
             >
-              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-              <span>طبيب الآفات</span>
+              <ClipboardCheck className="w-3.5 h-3.5 text-emerald-700" />
+              <span>استشارة هندسية</span>
             </button>
 
             {/* Desktop Calculator Button */}
@@ -408,10 +408,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                   if (onOpenAiConsultant) onOpenAiConsultant();
                   closeAll();
                 }}
-                className="flex flex-col items-center justify-center p-2 rounded-xl bg-emerald-50 text-emerald-900 border border-emerald-200 text-[11px] font-bold hover:bg-emerald-100 cursor-pointer"
+                className="flex flex-col items-center justify-center p-2 rounded-xl bg-emerald-50 text-emerald-950 border border-emerald-300 text-[11px] font-bold hover:bg-emerald-100 cursor-pointer"
               >
-                <Sparkles className="w-4 h-4 text-emerald-700 mb-0.5" />
-                <span>طبيب الآفات</span>
+                <ClipboardCheck className="w-4 h-4 text-emerald-700 mb-0.5" />
+                <span>استشارة فنية</span>
               </button>
 
               <button

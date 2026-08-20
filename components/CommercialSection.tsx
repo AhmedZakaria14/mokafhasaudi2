@@ -51,11 +51,11 @@ export const CommercialSection: React.FC = () => {
             </span>
 
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 leading-tight">
-              عقود مكافحة حشرات دورية معتمدة لاشتراطات <span className="text-emerald-800 underline decoration-amber-400 decoration-4 underline-offset-4">الأمانات والبلديات</span> وهيئة الغذاء والدواء
+              عقود مكافحة حشرات دورية معتمدة لاشتراطات <span className="text-emerald-800 underline decoration-amber-400 decoration-4 underline-offset-4">الأمانات والجهات الرقابية</span> وهيئة الغذاء والدواء
             </h2>
 
             <p className="text-sm text-slate-700 leading-relaxed font-medium">
-              نوفر برامج مكافحة وقائية متقدمة مطابقة لاشتراطات وزارة الشؤون البلدية والقروية والإسكان، الهيئة العامة للغذاء والدواء، ونظام الهاسب (HACCP) لجميع المنشآت والمستودعات والمصانع في كافة مدن المملكة.
+              نوفر برامج مكافحة وقائية متقدمة مطابقة لاشتراطات وزارة البلديات والإسكان، الهيئة العامة للغذاء والدواء، ونظام الهاسب (HACCP) لجميع المنشآت والمستودعات والمصانع في كافة مدن المملكة.
             </p>
 
             {/* Feature List */}

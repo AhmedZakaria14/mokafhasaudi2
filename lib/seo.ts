@@ -8,7 +8,7 @@ export function generateOrganizationSchema() {
     url: 'https://hosnalmamlaka.sa',
     logo: 'https://hosnalmamlaka.sa/logo.png',
     image: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80',
-    description: 'أفضل شركة مكافحة حشرات ورش مبيدات وتدفين النمل الأبيض بضمان 15 سنة في كافة مدن وأحياء المملكة العربية السعودية معتمدة من بلدي وهيئة الغذاء والدواء SFDA.',
+    description: 'أفضل شركة مكافحة حشرات ورش مبيدات وتدفين النمل الأبيض بضمان 15 سنة في كافة مدن وأحياء المملكة العربية السعودية معتمدة رسمياً ومطابقة لاشتراطات هيئة الغذاء والدواء SFDA.',
     telephone: '+966558141870',
     priceRange: 'SAR 199 - SAR 1800',
     address: {
@@ -108,7 +108,7 @@ export function generateOrganizationSchema() {
           '@type': 'Offer',
           itemOffered: {
             '@type': 'Service',
-            name: 'عقود المطاعم والشركات المعتمدة لمنصة بلدي'
+            name: 'عقود المطاعم والشركات المعتمدة للتراخيص والرقابة الصحية'
           }
         }
       ]

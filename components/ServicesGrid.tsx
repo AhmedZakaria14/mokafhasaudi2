@@ -44,7 +44,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({
     { id: 'residential', label: 'الصراصير وبق الفراش' },
     { id: 'wildlife', label: 'طرد الحمام والقوارض' },
     { id: 'farms', label: 'العقارب والمزارع' },
-    { id: 'commercial', label: 'عقود بلدي والشركات' }
+    { id: 'commercial', label: 'عقود الشركات والمنشآت' }
   ];
 
   const filteredServices = PEST_SERVICES.filter((s) => {

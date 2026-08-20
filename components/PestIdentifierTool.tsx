@@ -10,7 +10,7 @@ import {
   ShieldCheck,
   Calendar,
   Search,
-  Sparkles,
+  ClipboardCheck,
   ChevronLeft,
   CheckCircle2,
   PhoneCall,
@@ -122,20 +122,21 @@ export const PestIdentifierTool: React.FC<PestIdentifierToolProps> = ({
               })}
             </div>
 
-            {/* AI Diagnostics CTA Card */}
-            <div className="bg-gradient-to-r from-emerald-900 to-slate-900 rounded-2xl p-4 text-white text-right space-y-2 border border-emerald-700/50">
-              <div className="flex items-center gap-2 text-amber-300 font-bold text-xs">
-                <Sparkles className="w-4 h-4 animate-spin" style={{ animationDuration: '6s' }} />
-                <span>لم تتعرف على الحشرة بعد؟</span>
+            {/* Engineering Consultation Box */}
+            <div className="bg-slate-900 rounded-2xl p-4 text-white text-right space-y-2 border border-slate-800">
+              <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs">
+                <ClipboardCheck className="w-4 h-4" />
+                <span>هل تحتاج إلى فحص مجهري أو استشارة فنية؟</span>
               </div>
               <p className="text-xs text-slate-300">
-                استخدم المستشار الذكي لوصف الأعراض أو المشاهدات وسيقوم بتشخيص نوع الحشرة والمبيد المناسب فوراً.
+                يمكن لمهندسينا فحص العينات وتحديد نوع الحشرة بدقة مع خطة إبادة مخصصة وضمان رسمي.
               </p>
               <button
+                type="button"
                 onClick={onOpenAiConsultant}
-                className="w-full py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-xs rounded-xl transition flex items-center justify-center gap-1.5"
+                className="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
               >
-                <span>فتح التشخيص الذكي بالذكاء الاصطناعي</span>
+                <span>طلب استشارة هندسية ومعاينة مجانية</span>
                 <ChevronLeft className="w-4 h-4" />
               </button>
             </div>

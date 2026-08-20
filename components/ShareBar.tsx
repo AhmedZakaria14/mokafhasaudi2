@@ -154,12 +154,12 @@ export const ShareBar: React.FC<ShareBarProps> = ({ title, url }) => {
       {/* ================= MOBILE FIXED BOTTOM SHARE BAR ================= */}
       <div
         aria-label="شريط المشاركة السريع للهاتف"
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-4 py-2.5 shadow-2xl flex items-center justify-between gap-2"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 sm:px-4 py-2 sm:py-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] shadow-2xl flex items-center justify-between gap-1.5"
       >
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-black text-slate-800 flex items-center gap-1">
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <span className="text-[11px] sm:text-xs font-black text-slate-800 flex items-center gap-1">
             <Share2 className="w-3.5 h-3.5 text-emerald-700" />
-            <span>مشاركة:</span>
+            <span className="hidden xs:inline">مشاركة:</span>
           </span>
 
           {/* WhatsApp */}

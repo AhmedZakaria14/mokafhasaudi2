@@ -11,7 +11,6 @@ import {
   ShieldCheck,
   Zap,
   Tag,
-  Sparkles,
   Award,
   ChevronLeft
 } from 'lucide-react';
@@ -40,6 +39,8 @@ export const CostCalculator: React.FC<CostCalculatorProps> = ({
   const [couponApplied, setCouponApplied] = useState(true);
   const [customerPhone, setCustomerPhone] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
+  const [couponError, setCouponError] = useState<string | null>(null);
 
   // Sync initialCouponCode when changed without useEffect
   if (prevInitialCoupon !== initialCouponCode) {
@@ -126,6 +127,7 @@ export const CostCalculator: React.FC<CostCalculatorProps> = ({
 
   const handleApplyCoupon = (e: React.FormEvent) => {
     e.preventDefault();
+    setCouponError(null);
     const clean = couponCode.trim().toUpperCase();
     if (['SAUDI30', 'NEW2026', 'HOSN30', 'SAUDI2026', 'HOSN20'].includes(clean)) {
       setCouponApplied(true);
@@ -135,15 +137,16 @@ export const CostCalculator: React.FC<CostCalculatorProps> = ({
         // ignore
       }
     } else {
-      alert('كوبون غير صالح. جرب كود (SAUDI30) للحصول على خصم 30% لعملاء الموقع');
+      setCouponError('كوبون غير صالح. جرب كود (SAUDI30) للحصول على خصم 30% لعملاء الموقع');
       setCouponApplied(false);
     }
   };
 
   const handleBookQuote = (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError(null);
     if (!customerPhone || customerPhone.length < 9) {
-      alert('يرجى كتابة رقم جوال صحيح للتواصل');
+      setFormError('يرجى كتابة رقم جوال صحيح للتواصل (مثال: 05XXXXXXXX)');
       return;
     }
 
@@ -154,19 +157,6 @@ export const CostCalculator: React.FC<CostCalculatorProps> = ({
     }
 
     setSubmitted(true);
-
-    const msg = encodeURIComponent(
-      `السلام عليكم، قمت بحساب التكلفة في موقع حصن المملكة:\n` +
-      `- المدينة: ${currentCityObj.name}\n` +
-      `- نوع العقار: ${propertyType}\n` +
-      `- نوع الحشرة: ${pestType}\n` +
-      `- المساحة: ${areaSqm} م²\n` +
-      `- الباقة: ${warrantyTier === 'gold' ? 'الضمان الذهبي 12 شهر' : warrantyTier === 'permanent' ? 'ضمان 15 سنة' : 'الضمان الفضي'}\n` +
-      `- التقدير بعد الخصم: ${finalPrice} ريال سعودي\n` +
-      `- رقم جوالي: ${customerPhone}\n` +
-      `أرغب بتثبيت الحجز وإرسال الفني.`
-    );
-    window.open(`https://wa.me/966558141870?text=${msg}`, '_blank');
   };
 
   return (
@@ -361,11 +351,11 @@ export const CostCalculator: React.FC<CostCalculatorProps> = ({
           </div>
 
           {/* Pricing Result Card */}
-          <div className="bg-gradient-to-br from-emerald-950 to-slate-950 text-white rounded-2xl p-4 sm:p-5 border-2 border-emerald-500/40 shadow-xl">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-4 border-b border-emerald-800/60">
+          <div className="bg-slate-900 text-white rounded-2xl p-4 sm:p-5 border border-slate-800 shadow-xl">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-4 border-b border-slate-800">
               <div className="text-center sm:text-right">
-                <div className="text-xs text-emerald-300 font-semibold flex items-center justify-center sm:justify-start gap-1">
-                  <Sparkles className="w-3.5 h-3.5" />
+                <div className="text-xs text-emerald-400 font-bold flex items-center justify-center sm:justify-start gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5" />
                   <span>السعر التقديري الشامل بعد الخصم:</span>
                 </div>
                 <div className="flex items-baseline gap-2 mt-1">
@@ -403,36 +393,82 @@ export const CostCalculator: React.FC<CostCalculatorProps> = ({
             </div>
 
             {/* Quick Booking Phone Input inside result */}
-            <form onSubmit={handleBookQuote} className="pt-4 space-y-3">
-              <div>
-                <label className="block text-xs font-bold text-slate-200 mb-1">
-                  أدخل رقم جوالك لتأكيد هذا العرض واستلام الفني:
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    type="tel"
-                    dir="ltr"
-                    placeholder="05XXXXXXXX"
-                    value={customerPhone}
-                    onChange={(e) => setCustomerPhone(e.target.value)}
-                    required
-                    className="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white font-bold placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-right"
-                  />
-                  <button
-                    type="submit"
-                    className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-xs sm:text-sm rounded-xl transition flex items-center gap-1.5 cursor-pointer shadow-lg"
+            {submitted ? (
+              <div className="pt-4 bg-emerald-900/60 border border-emerald-500/40 rounded-2xl p-4 text-center space-y-3 animate-in fade-in">
+                <div className="w-10 h-10 bg-emerald-500 text-slate-950 rounded-xl mx-auto flex items-center justify-center font-black">
+                  <CheckCircle2 className="w-6 h-6" />
+                </div>
+                <h4 className="font-black text-sm text-white">تم تجهيز عرض السعر الخاص بك بنجاح!</h4>
+                <p className="text-xs text-slate-200 leading-relaxed">
+                  السعر المقدر هو <strong>{finalPrice} ريال</strong> شامل الضريبة والضمان. يمكنك التنسيق المباشر مع المهندس الآن:
+                </p>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-2 pt-1">
+                  <a
+                    href={`https://wa.me/966558141870?text=${encodeURIComponent(
+                      `السلام عليكم، قمت بحساب التكلفة في موقع حصن المملكة:\n` +
+                      `- المدينة: ${currentCityObj.name}\n` +
+                      `- نوع العقار: ${propertyType}\n` +
+                      `- نوع الحشرة: ${pestType}\n` +
+                      `- المساحة: ${areaSqm} م²\n` +
+                      `- الباقة: ${warrantyTier === 'gold' ? 'الضمان الذهبي 12 شهر' : warrantyTier === 'permanent' ? 'ضمان 15 سنة' : 'الضمان الفضي'}\n` +
+                      `- التقدير بعد الخصم: ${finalPrice} ريال سعودي\n` +
+                      `- رقم جوالي: ${customerPhone}\n` +
+                      `أرغب بتثبيت الحجز وإرسال الفني.`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto px-4 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs rounded-xl flex items-center justify-center gap-2 shadow"
                   >
-                    <span>تأكيد الحجز فوراً</span>
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
+                    <MessageSquare className="w-4 h-4" />
+                    <span>تأكيد الحجز عبر واتساب فوراً</span>
+                  </a>
+
+                  <a
+                    href="tel:0558141870"
+                    className="w-full sm:w-auto px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs rounded-xl border border-slate-700 flex items-center justify-center gap-2"
+                  >
+                    <PhoneCall className="w-4 h-4" />
+                    <span>اتصال بالمهندس: 0558141870</span>
+                  </a>
                 </div>
               </div>
+            ) : (
+              <form onSubmit={handleBookQuote} className="pt-4 space-y-3">
+                {formError && (
+                  <div className="p-2.5 bg-red-950/80 border border-red-500 text-red-200 text-xs rounded-xl font-bold">
+                    {formError}
+                  </div>
+                )}
+                <div>
+                  <label className="block text-xs font-bold text-slate-200 mb-1">
+                    أدخل رقم جوالك لتأكيد هذا العرض واستلام الفني:
+                  </label>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <input
+                      type="tel"
+                      dir="ltr"
+                      placeholder="05XXXXXXXX"
+                      value={customerPhone}
+                      onChange={(e) => setCustomerPhone(e.target.value)}
+                      required
+                      className="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white font-bold placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-right"
+                    />
+                    <button
+                      type="submit"
+                      className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-black text-xs sm:text-sm rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer shadow-lg"
+                    >
+                      <span>تأكيد الحجز فوراً</span>
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
 
-              <div className="flex items-center justify-between text-[11px] text-slate-400">
-                <span>✓ لا يلزم الدفع مقدماً (الدفع بعد الخدمة)</span>
-                <span>✓ معاينة وفحص فوري مجاني</span>
-              </div>
-            </form>
+                <div className="flex items-center justify-between text-[11px] text-slate-400">
+                  <span>✓ لا يلزم الدفع مقدماً (الدفع بعد الخدمة)</span>
+                  <span>✓ معاينة وفحص فوري مجاني</span>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       </div>

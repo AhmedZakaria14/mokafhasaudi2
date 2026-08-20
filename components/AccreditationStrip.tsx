@@ -7,8 +7,7 @@ import {
   Award,
   FileCheck2,
   BadgeCheck,
-  CheckCircle2,
-  Sparkles
+  CheckCircle2
 } from 'lucide-react';
 
 export const AccreditationStrip: React.FC = () => {
@@ -20,7 +19,7 @@ export const AccreditationStrip: React.FC = () => {
       feature: 'مبيدات آمنة 100% وبدون رائحة'
     },
     {
-      title: 'وزارة الشؤون البلدية والقروية والإسكان',
+      title: 'وزارة البلديات والإسكان',
       subtitle: 'عقود وشهادات إلكترونية فورية للمنشآت وتجديد رخص الأنشطة',
       badge: 'مطابقة المعايير',
       feature: 'استيفاء اشتراطات الرقابة الصحية'

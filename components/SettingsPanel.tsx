@@ -11,7 +11,7 @@ import {
   PhoneCall,
   MessageSquare,
   Clock,
-  Sparkles,
+  ClipboardCheck,
   Tag,
   MapPin,
   Building2,
@@ -167,11 +167,11 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
               <div className="space-y-4">
                 <div className="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-3.5 text-xs text-emerald-950">
                   <div className="font-bold flex items-center gap-1.5 mb-1 text-emerald-900">
-                    <Sparkles className="w-4 h-4 text-emerald-700" />
+                    <ClipboardCheck className="w-4 h-4 text-emerald-700" />
                     <span>أدوات مساعدة وخدمات الحساب الفوري:</span>
                   </div>
                   <p className="text-slate-600 text-[11px] leading-relaxed">
-                    تم نقل الأدوات الثانوية لتسهيل التصفح وتخفيف الحمل البصري، مع الحفاظ على الوصول المباشر لكافة الخيارات.
+                    تم تجميع الأدوات التفاعلية لتسهيل التصفح مع الحفاظ على الوصول المباشر لكافة الخيارات.
                   </p>
                 </div>
 
@@ -201,19 +201,19 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                   </div>
                 </div>
 
-                {/* 2. AI Pest Consultant */}
+                {/* 2. Technical Consultation */}
                 <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm hover:border-emerald-300 transition">
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-800 flex items-center justify-center shrink-0">
-                      <Sparkles className="w-5 h-5" />
+                    <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-800 flex items-center justify-center shrink-0">
+                      <ClipboardCheck className="w-5 h-5 text-emerald-700" />
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
-                        <h4 className="text-xs font-bold text-slate-900">طبيب الآفات بالذكاء الاصطناعي</h4>
+                        <h4 className="text-xs font-bold text-slate-900">المكتب الفني للاستشارات والمعاينة</h4>
                         <span className="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded">مجاني</span>
                       </div>
                       <p className="text-[11px] text-slate-500 mt-1">
-                        تشخيص فوري لنوع الآفة ونوع المبيد الملائم وفق معايير SFDA.
+                        طلب تقرير معاينة وبروتوكول كيميائي معتمد وفق معايير SFDA.
                       </p>
                       <button
                         type="button"
@@ -223,8 +223,8 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
                         }}
                         className="mt-3 w-full py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                       >
-                        <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                        <span>بدء التشخيص الفوري الذكي</span>
+                        <ClipboardCheck className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>فتح الاستشارة الهندسية</span>
                       </button>
                     </div>
                   </div>

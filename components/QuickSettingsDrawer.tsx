@@ -6,11 +6,11 @@ import {
   X,
   MapPin,
   Tag,
-  Sparkles,
   Calculator,
   PhoneCall,
   MessageSquare,
   FileCheck2,
+  ClipboardCheck,
   BookOpen,
   HelpCircle,
   Building2,
@@ -116,8 +116,8 @@ export const QuickSettingsDrawer: React.FC<QuickSettingsDrawerProps> = ({
                   : 'border-transparent text-slate-500 hover:text-slate-900'
               }`}
             >
-              <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
-              <span>الأدوات الذكية</span>
+              <Sliders className="w-3.5 h-3.5 text-emerald-700" />
+              <span>الأدوات الهندسية</span>
             </button>
 
             <button
@@ -230,15 +230,15 @@ export const QuickSettingsDrawer: React.FC<QuickSettingsDrawerProps> = ({
                   className="w-full p-3.5 rounded-2xl border border-slate-200 hover:border-emerald-300 bg-slate-50 hover:bg-emerald-50/50 transition text-right flex items-start gap-3 cursor-pointer group"
                 >
                   <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-emerald-700 shrink-0 group-hover:bg-emerald-700 group-hover:text-white transition">
-                    <Sparkles className="w-5 h-5" />
+                    <ClipboardCheck className="w-5 h-5" />
                   </div>
                   <div className="flex-1">
                     <div className="font-bold text-xs text-slate-900 group-hover:text-emerald-900 flex items-center gap-1.5">
-                      <span>طبيب الآفات بالذكاء الاصطناعي (AI)</span>
-                      <span className="text-[9px] bg-emerald-100 text-emerald-800 px-1 rounded font-bold">مجاناً</span>
+                      <span>المكتب الفني واستشارات الآفات</span>
+                      <span className="text-[9px] bg-emerald-100 text-emerald-800 px-1 rounded font-bold">معاينة مجانية</span>
                     </div>
                     <p className="text-[11px] text-slate-500 mt-0.5">
-                      تشخيص فوري للأعراض ونوع المبيد الأنسب مع الإرشادات الوقائية.
+                      تشخيص فوري للأعراض ونوع المبيد الأنسب مع الإرشادات الوقائية المعتمدة.
                     </p>
                   </div>
                 </button>
@@ -352,7 +352,7 @@ export const QuickSettingsDrawer: React.FC<QuickSettingsDrawerProps> = ({
                 >
                   <span className="flex items-center gap-2">
                     <Building2 className="w-4 h-4 text-emerald-700" />
-                    <span>عقود المنشآت وتجديد رخص بلدي</span>
+                    <span>عقود المنشآت وتجديد الرخص المهنية</span>
                   </span>
                   <ChevronLeft className="w-4 h-4 text-slate-400" />
                 </Link>

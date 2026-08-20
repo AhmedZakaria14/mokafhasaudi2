@@ -6,8 +6,7 @@ import {
   MessageSquare,
   Calculator,
   ShieldCheck,
-  Settings,
-  Sparkles
+  Settings
 } from 'lucide-react';
 
 interface FloatingContactBarProps {

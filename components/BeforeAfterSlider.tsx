@@ -45,7 +45,7 @@ const CASE_STUDIES: CaseStudy[] = [
     location: 'مطعم ومطبخ تجاري - حي الروضة، جدة',
     pest: 'الصراصير الألمانية والأمريكية',
     pesticide: 'جل ماكس فورس الألماني + ضباب ULV البارد',
-    warranty: 'سنتان مع عقد بلدي رسمي',
+    warranty: 'سنتان مع عقد تجاري رسمي معتمد',
     beforeImg: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1200&q=80',
     afterImg: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1200&q=80',
     description: 'معالجة متقدمة لشاشات الفحص ومجاري الصرف دون الحاجة لإغلاق المطعم أو إخلاء المواد الغذائية مع الامتثال الكامل لاشتراطات أمانة جدة.',

@@ -267,6 +267,20 @@ export default async function BlogPostPage({ params }: Props) {
                 <Markdown
                   remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeRaw]}
+                  components={{
+                    a: ({ href, children, ...props }) => (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-emerald-700 hover:text-emerald-900 font-bold underline decoration-emerald-500/50 hover:decoration-emerald-700 underline-offset-4 transition inline-flex items-center gap-0.5 mx-1"
+                        {...props}
+                      >
+                        <span>{children}</span>
+                        <span className="text-[10px] text-emerald-500 font-mono">↗</span>
+                      </a>
+                    )
+                  }}
                 >
                   {post.content}
                 </Markdown>
@@ -298,7 +312,7 @@ export default async function BlogPostPage({ params }: Props) {
                 </div>
                 <p className="text-xs text-slate-600 font-medium">{post.authorRole}</p>
                 <p className="text-xs text-slate-700 leading-relaxed font-medium pt-1">
-                  متخصص في تصميم بروتوكولات المكافحة الإنشائية والكيميائية المعتمدة للمنازل والمنشآت التجارية بالمملكة العربية السعودية، مع خبرة تتجاوز 14 عاماً في معايير الهيئة العامة للغذاء والدواء والبلديات.
+                  متخصص في تصميم بروتوكولات المكافحة الإنشائية والكيميائية المعتمدة للمنازل والمنشآت التجارية بالمملكة العربية السعودية، مع خبرة تتجاوز 14 عاماً في معايير الهيئة العامة للغذاء والدواء والجهات الرقابية.
                 </p>
               </div>
             </div>
@@ -411,10 +425,12 @@ export default async function BlogPostPage({ params }: Props) {
                   <Link
                     key={idx}
                     href={srv.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="p-3 bg-slate-50 hover:bg-emerald-50 hover:text-emerald-950 border border-slate-200 hover:border-emerald-300 rounded-2xl flex items-center justify-between text-xs font-bold text-slate-800 transition group"
                   >
                     <span>{srv.title}</span>
-                    <ChevronLeft className="w-4 h-4 text-slate-400 group-hover:text-emerald-700 transform group-hover:-translate-x-1 transition" />
+                    <span className="text-[10px] text-slate-400 group-hover:text-emerald-700 font-mono">↗</span>
                   </Link>
                 ))}
               </div>
@@ -431,10 +447,12 @@ export default async function BlogPostPage({ params }: Props) {
                   <Link
                     key={idx}
                     href={pst.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="p-3 bg-slate-50 hover:bg-emerald-50 hover:text-emerald-950 border border-slate-200 hover:border-emerald-300 rounded-2xl flex items-center justify-between text-xs font-bold text-slate-800 transition group"
                   >
                     <span>{pst.title}</span>
-                    <ChevronLeft className="w-4 h-4 text-slate-400 group-hover:text-emerald-700 transform group-hover:-translate-x-1 transition" />
+                    <span className="text-[10px] text-slate-400 group-hover:text-emerald-700 font-mono">↗</span>
                   </Link>
                 ))}
               </div>
@@ -451,9 +469,11 @@ export default async function BlogPostPage({ params }: Props) {
                   <Link
                     key={idx}
                     href={cty.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="p-2.5 bg-slate-50 hover:bg-emerald-800 hover:text-white border border-slate-200 rounded-xl text-center text-slate-700 transition font-bold"
                   >
-                    مكافحة في {cty.name}
+                    مكافحة في {cty.name} ↗
                   </Link>
                 ))}
               </div>

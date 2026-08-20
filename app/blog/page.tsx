@@ -5,7 +5,7 @@ import { SeoBreadcrumbs } from '@/components/SeoBreadcrumbs';
 import { SeoInternalLinks } from '@/components/SeoInternalLinks';
 import { JsonLd } from '@/components/JsonLd';
 import { BlogDirectoryClient } from '@/components/BlogDirectoryClient';
-import { BookOpen, ShieldCheck, Sparkles, PhoneCall, Award } from 'lucide-react';
+import { BookOpen, ShieldCheck, PhoneCall, Award } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'موسوعة واستشارات مكافحة الآفات ورش المبيدات المعتمدة بالمملكة | حصن المملكة',
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     'مكافحة بق الفراش بالحرارة والبخار',
     'اسعار رش الحشرات بالسعودية',
     'مبيدات معتمدة من هيئة الغذاء والدواء SFDA',
-    'عقود مكافحة الحشرات للمطاعم والبلديات'
+    'عقود مكافحة الحشرات للمطاعم والمنشآت'
   ],
   alternates: {
     canonical: 'https://حصن-المملكة.com/blog'
@@ -67,7 +67,7 @@ export default function BlogDirectoryPage() {
         <div className="max-w-4xl mx-auto space-y-4 relative z-10">
           
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold shadow-xs">
-            <Sparkles className="w-4 h-4 text-amber-300" />
+            <Award className="w-4 h-4 text-amber-300" />
             <span>الموسوعة الهندسية الأكبر لمكافحة الآفات بالمملكة</span>
           </div>
 

@@ -182,7 +182,7 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li>
                 <button onClick={onOpenAiConsultant} className="hover:text-emerald-400 transition text-right cursor-pointer">
-                  طبيب الآفات الذكي (AI)
+                  المكتب الفني والاستشارات
                 </button>
               </li>
               <li>

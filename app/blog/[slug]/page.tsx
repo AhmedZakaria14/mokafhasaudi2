@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
+import SafeImage from '@/components/SafeImage';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -220,13 +220,14 @@ export default async function BlogPostPage({ params }: Props) {
             
             {/* Featured Hero Image */}
             <div className="relative aspect-[16/9] rounded-3xl overflow-hidden shadow-lg border border-slate-200 bg-slate-900">
-              <Image
+              <SafeImage
                 src={post.image}
                 alt={post.title}
                 fill
                 priority
                 className="object-cover"
-                referrerPolicy="no-referrer"
+                fallbackTitle={post.title}
+                fallbackCategory={post.category}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
               <div className="absolute bottom-4 right-4 bg-slate-900/90 backdrop-blur-md text-white text-xs px-3 py-1.5 rounded-xl border border-slate-700 flex items-center gap-2">
@@ -529,12 +530,13 @@ export default async function BlogPostPage({ params }: Props) {
                 >
                   <div>
                     <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
-                      <Image
+                      <SafeImage
                         src={other.image}
                         alt={other.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        referrerPolicy="no-referrer"
+                        fallbackTitle={other.title}
+                        fallbackCategory={other.category}
                       />
                       <span className="absolute top-3 right-3 bg-emerald-950/90 text-amber-300 text-[10px] font-black px-2.5 py-1 rounded-full border border-amber-400/30 backdrop-blur-xs">
                         {other.category}

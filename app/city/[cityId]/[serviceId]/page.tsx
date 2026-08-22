@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
+import SafeImage from '@/components/SafeImage';
 import { SAUDI_CITIES } from '@/data/regions';
 import { PEST_SERVICES } from '@/data/services';
 import { SeoBreadcrumbs } from '@/components/SeoBreadcrumbs';
@@ -210,13 +210,14 @@ export default async function CityServiceComboPage({ params }: Props) {
           </div>
 
           <div className="lg:col-span-5 relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-emerald-500/30 aspect-[4/3]">
-              <Image
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-emerald-500/30 aspect-[4/3] bg-slate-900">
+              <SafeImage
                 src={service.heroImage}
                 alt={`${service.title} في ${city.name}`}
                 fill
                 className="object-cover"
-                referrerPolicy="no-referrer"
+                fallbackTitle={`${service.title} - ${city.name}`}
+                fallbackCategory="خدمة معتمدة"
               />
             </div>
           </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import Image from 'next/image';
+import SafeImage from '@/components/SafeImage';
 import Link from 'next/link';
 import { SAUDI_BLOG_POSTS, BlogPost } from '@/data/blog';
 import {
@@ -45,12 +45,13 @@ export const BlogSection: React.FC = () => {
             >
               <div>
                 <div className="relative h-44 w-full bg-slate-900 overflow-hidden">
-                  <Image
+                  <SafeImage
                     src={post.image}
                     alt={post.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    referrerPolicy="no-referrer"
+                    fallbackTitle={post.title}
+                    fallbackCategory={post.category}
                   />
                   <div className="absolute top-3 right-3 bg-slate-950/90 backdrop-blur-md text-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-full border border-amber-400/30">
                     {post.category}
@@ -118,14 +119,15 @@ export const BlogSection: React.FC = () => {
           <div className="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-200 text-right relative animate-in fade-in zoom-in duration-200">
             {/* Header image banner */}
             <div className="relative h-60 w-full bg-slate-900">
-              <Image
+              <SafeImage
                 src={activePost.image}
                 alt={activePost.title}
                 fill
                 className="object-cover opacity-80"
-                referrerPolicy="no-referrer"
+                fallbackTitle={activePost.title}
+                fallbackCategory={activePost.category}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent pointer-events-none" />
 
               <button
                 onClick={() => setActivePost(null)}

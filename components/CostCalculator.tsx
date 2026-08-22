@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { SAUDI_CITIES } from '@/data/regions';
 import {
   Calculator,
@@ -49,7 +50,20 @@ export const CostCalculator: React.FC<CostCalculatorProps> = ({
     setCouponApplied(true);
   }
 
-  if (!isOpen) return null;
+  // Handle escape key and body scroll lock for app-like modal experience
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isOpen, onClose]);
 
   // Pricing calculation algorithm
   const getBasePrice = () => {
@@ -160,29 +174,49 @@ export const CostCalculator: React.FC<CostCalculatorProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-      <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-slate-200 text-right relative animate-in fade-in zoom-in-95 duration-200">
-        {/* Header */}
-        <div className="bg-gradient-to-r from-slate-900 via-slate-850 to-emerald-950 text-white p-5 sm:p-6 rounded-t-3xl flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 bg-emerald-500/20 border border-emerald-400/40 rounded-2xl flex items-center justify-center text-emerald-400">
-              <Calculator className="w-6 h-6" />
-            </div>
-            <div>
-              <h3 className="text-xl font-black">حاسبة الأسعار الفورية الذكية</h3>
-              <p className="text-xs text-slate-300">
-                احسب تكلفة الرش بدقة حسب مساحة عقارك ونوع الحشرة والضمان
-              </p>
-            </div>
-          </div>
-
-          <button
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+          {/* Animated Glass Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition"
+            className="fixed inset-0 bg-slate-950/80 backdrop-blur-md cursor-pointer"
+          />
+
+          {/* Animated Modal Card with Interactive Spring */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, y: 24 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.94, y: 16 }}
+            transition={{ type: 'spring', damping: 26, stiffness: 320, mass: 0.85 }}
+            className="bg-white rounded-3xl max-w-2xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-slate-200 text-right relative z-10 my-auto"
+            onClick={(e) => e.stopPropagation()}
           >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
+            {/* Header */}
+            <div className="bg-gradient-to-r from-slate-900 via-slate-850 to-emerald-950 text-white p-5 sm:p-6 rounded-t-3xl flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 bg-emerald-500/20 border border-emerald-400/40 rounded-2xl flex items-center justify-center text-emerald-400">
+                  <Calculator className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-black">حاسبة الأسعار الفورية الذكية</h3>
+                  <p className="text-xs text-slate-300">
+                    احسب تكلفة الرش بدقة حسب مساحة عقارك ونوع الحشرة والضمان
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={onClose}
+                className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
         {/* Form Body */}
         <div className="p-5 sm:p-6 space-y-5">
@@ -471,7 +505,9 @@ export const CostCalculator: React.FC<CostCalculatorProps> = ({
             )}
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
+  )}
+</AnimatePresence>
   );
 };

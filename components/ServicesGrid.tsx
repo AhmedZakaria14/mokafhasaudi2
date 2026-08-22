@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import Image from 'next/image';
+import SafeImage from '@/components/SafeImage';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import { PEST_SERVICES, ServiceItem } from '@/data/services';
@@ -135,15 +135,16 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({
               >
                 {/* Card Image Banner */}
                 <div className="relative h-48 w-full overflow-hidden bg-slate-900">
-                  <Image
+                  <SafeImage
                     src={service.heroImage}
                     alt={service.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
-                    referrerPolicy="no-referrer"
+                    fallbackTitle={service.title}
+                    fallbackCategory="خدمة معتمدة"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent pointer-events-none" />
 
                   {/* Badge on Image */}
                   <div className="absolute top-3 right-3 bg-slate-950/90 backdrop-blur-md text-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-full border border-amber-400/40 flex items-center gap-1 shadow-sm">
@@ -259,92 +260,106 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({
       </div>
 
       {/* Service Modal */}
-      {selectedServiceModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200"
-          onClick={() => setSelectedServiceModal(null)}
-        >
-          <div
-            className="bg-white border border-slate-200 rounded-3xl max-w-2xl w-full p-6 text-slate-900 shadow-2xl relative text-right overflow-hidden max-h-[90vh] overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close button */}
-            <button
-              type="button"
+      <AnimatePresence>
+        {selectedServiceModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+            {/* Glass Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
+              className="fixed inset-0 bg-slate-950/80 backdrop-blur-md cursor-pointer"
               onClick={() => setSelectedServiceModal(null)}
-              className="absolute top-5 left-5 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 transition cursor-pointer"
+            />
+
+            {/* Modal Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: 22 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.94, y: 16 }}
+              transition={{ type: 'spring', damping: 26, stiffness: 320, mass: 0.85 }}
+              className="bg-white border border-slate-200 rounded-3xl max-w-2xl w-full p-5 sm:p-6 text-slate-900 shadow-2xl relative text-right overflow-hidden max-h-[90vh] overflow-y-auto z-10 my-auto"
+              onClick={(e) => e.stopPropagation()}
             >
-              <X className="w-5 h-5" />
-            </button>
+              {/* Close button */}
+              <button
+                type="button"
+                onClick={() => setSelectedServiceModal(null)}
+                className="absolute top-4 left-4 sm:top-5 sm:left-5 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
 
-            {/* Header */}
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
-                {getIcon(selectedServiceModal.iconName)}
-              </div>
-              <div>
-                <span className="text-xs font-bold text-amber-800 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded-full">
-                  {selectedServiceModal.badgeText}
-                </span>
-                <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-1">
-                  {selectedServiceModal.title}
-                </h3>
-              </div>
-            </div>
-
-            <p className="text-sm text-slate-600 leading-relaxed mb-4">
-              {selectedServiceModal.fullDesc}
-            </p>
-
-            {/* Key Specs Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5 text-xs">
-              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3.5">
-                <span className="text-slate-500 block mb-1">المبيد الكيميائي المستخدم:</span>
-                <span className="text-emerald-800 font-bold">{selectedServiceModal.pesticideType}</span>
-              </div>
-
-              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3.5">
-                <span className="text-slate-500 block mb-1">مدة الضمان المعتمد:</span>
-                <span className="text-amber-800 font-bold">{selectedServiceModal.warrantyPeriod}</span>
-              </div>
-            </div>
-
-            {/* Features List */}
-            <div className="space-y-2 mb-6">
-              <div className="text-xs font-bold text-slate-900 mb-2">مميزات التنفيذ وضمان الجودة:</div>
-              {selectedServiceModal.features.map((feature, idx) => (
-                <div key={idx} className="flex items-start gap-2 text-xs text-slate-700">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                  <span>{feature}</span>
+              {/* Header */}
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
+                  {getIcon(selectedServiceModal.iconName)}
                 </div>
-              ))}
-            </div>
+                <div>
+                  <span className="text-xs font-bold text-amber-800 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded-full">
+                    {selectedServiceModal.badgeText}
+                  </span>
+                  <h3 className="text-xl sm:text-2xl font-black text-slate-900 mt-1">
+                    {selectedServiceModal.title}
+                  </h3>
+                </div>
+              </div>
 
-            {/* Action Buttons */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-slate-200">
-              <a
-                href={`tel:0558141870`}
-                className="py-3 px-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow"
-              >
-                <PhoneCall className="w-4 h-4" />
-                <span>طلب الفني فوراً: 0558141870</span>
-              </a>
+              <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                {selectedServiceModal.fullDesc}
+              </p>
 
-              <a
-                href={`https://wa.me/966558141870?text=${encodeURIComponent(
-                  `السلام عليكم، أود حجز موعد لخدمة ${selectedServiceModal.title} مع تطبيق خصم الموقع.`
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="py-3 px-4 bg-slate-900 hover:bg-slate-800 text-emerald-400 font-bold text-xs rounded-xl border border-slate-800 transition flex items-center justify-center gap-2"
-              >
-                <MessageSquare className="w-4 h-4" />
-                <span>محادثة واتساب مباشرة</span>
-              </a>
-            </div>
+              {/* Key Specs Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5 text-xs">
+                <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3.5">
+                  <span className="text-slate-500 block mb-1">المبيد الكيميائي المستخدم:</span>
+                  <span className="text-emerald-800 font-bold">{selectedServiceModal.pesticideType}</span>
+                </div>
+
+                <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3.5">
+                  <span className="text-slate-500 block mb-1">مدة الضمان المعتمد:</span>
+                  <span className="text-amber-800 font-bold">{selectedServiceModal.warrantyPeriod}</span>
+                </div>
+              </div>
+
+              {/* Features List */}
+              <div className="space-y-2 mb-6">
+                <div className="text-xs font-bold text-slate-900 mb-2">مميزات التنفيذ وضمان الجودة:</div>
+                {selectedServiceModal.features.map((feature, idx) => (
+                  <div key={idx} className="flex items-start gap-2 text-xs text-slate-700">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <span>{feature}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-slate-200">
+                <a
+                  href={`tel:0558141870`}
+                  className="py-3 px-4 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow cursor-pointer"
+                >
+                  <PhoneCall className="w-4 h-4" />
+                  <span>طلب الفني فوراً: 0558141870</span>
+                </a>
+
+                <a
+                  href={`https://wa.me/966558141870?text=${encodeURIComponent(
+                    `السلام عليكم، أود حجز موعد لخدمة ${selectedServiceModal.title} مع تطبيق خصم الموقع.`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-3 px-4 bg-slate-900 hover:bg-slate-800 text-emerald-400 font-bold text-xs rounded-xl border border-slate-800 transition flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  <span>محادثة واتساب مباشرة</span>
+                </a>
+              </div>
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
     </section>
   );
 };

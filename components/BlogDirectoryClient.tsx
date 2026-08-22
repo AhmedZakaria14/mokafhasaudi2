@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import SafeImage from '@/components/SafeImage';
 import { BlogPost } from '@/data/blog';
 import {
   Search,
@@ -234,13 +234,14 @@ export const BlogDirectoryClient: React.FC<BlogDirectoryClientProps> = ({ posts 
           </div>
 
           <div className="lg:col-span-5 relative aspect-[16/11] lg:h-full min-h-[260px] overflow-hidden bg-slate-900">
-            <Image
+            <SafeImage
               src={featuredPost.image}
               alt={featuredPost.title}
               fill
               priority
               className="object-cover"
-              referrerPolicy="no-referrer"
+              fallbackTitle={featuredPost.title}
+              fallbackCategory={featuredPost.category}
             />
           </div>
         </section>
@@ -296,12 +297,13 @@ export const BlogDirectoryClient: React.FC<BlogDirectoryClientProps> = ({ posts 
               >
                 <div>
                   <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
-                    <Image
+                    <SafeImage
                       src={post.image}
                       alt={post.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      referrerPolicy="no-referrer"
+                      fallbackTitle={post.title}
+                      fallbackCategory={post.category}
                     />
                     <span className="absolute top-3 right-3 bg-slate-950/90 text-amber-300 text-[10px] font-black px-2.5 py-1 rounded-full border border-amber-400/30 backdrop-blur-xs">
                       {post.category}

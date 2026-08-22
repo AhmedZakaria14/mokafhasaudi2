@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
+import SafeImage from '@/components/SafeImage';
 import { SAUDI_PESTS } from '@/data/pests';
 import { PEST_SERVICES } from '@/data/services';
 import { SeoBreadcrumbs } from '@/components/SeoBreadcrumbs';
@@ -158,13 +158,14 @@ export default async function PestDetailPage({ params }: Props) {
           </div>
 
           <div className="lg:col-span-5 relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-emerald-500/30 aspect-[4/3]">
-              <Image
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-emerald-500/30 aspect-[4/3] bg-slate-900">
+              <SafeImage
                 src={pest.image}
                 alt={`صورة ومعلومات عن ${pest.name}`}
                 fill
                 className="object-cover"
-                referrerPolicy="no-referrer"
+                fallbackTitle={pest.name}
+                fallbackCategory={pest.category}
               />
             </div>
           </div>

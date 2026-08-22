@@ -18,25 +18,22 @@ export const CommercialSection: React.FC = () => {
   const [commercialActivity, setCommercialActivity] = useState('مطعم / كافيه');
   const [city, setCity] = useState('الرياض');
   const [phone, setPhone] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!phone || phone.length < 9) {
-      alert('يرجى كتابة رقم جوال صحيح للتواصل');
+      setErrorMsg('يرجى كتابة رقم جوال صحيح للتواصل');
       return;
     }
+    setErrorMsg('');
     try {
       confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
     } catch {
       // ignore
     }
     setSubmitted(true);
-
-    const msg = encodeURIComponent(
-      `السلام عليكم، أرغب بطلب عرض سعر تجاري وعقد مكافحة حشرات وامتثال صحي معتمد:\n- اسم المنشأة: ${companyName || 'غير محدد'}\n- النشاط: ${commercialActivity}\n- المدينة: ${city}\n- رقم الجوال: ${phone}`
-    );
-    window.open(`https://wa.me/966558141870?text=${msg}`, '_blank');
   };
 
   return (

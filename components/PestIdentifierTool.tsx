@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import Image from 'next/image';
+import SafeImage from '@/components/SafeImage';
 import Link from 'next/link';
 import { SAUDI_PESTS, PestInfo } from '@/data/pests';
 import {
@@ -90,12 +90,13 @@ export const PestIdentifierTool: React.FC<PestIdentifierToolProps> = ({
                   >
                     <div className="flex items-center gap-3">
                       <div className="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-slate-200">
-                        <Image
+                        <SafeImage
                           src={pest.image}
                           alt={pest.name}
                           fill
                           className="object-cover"
-                          referrerPolicy="no-referrer"
+                          fallbackTitle={pest.name}
+                          fallbackCategory={pest.category}
                         />
                       </div>
                       <div>
@@ -149,12 +150,13 @@ export const PestIdentifierTool: React.FC<PestIdentifierToolProps> = ({
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-5 border-b border-slate-200">
                 <div className="flex items-center gap-4">
                   <div className="relative w-20 h-20 rounded-2xl overflow-hidden border-2 border-emerald-500 shadow-md shrink-0">
-                    <Image
+                    <SafeImage
                       src={selectedPest.image}
                       alt={selectedPest.name}
                       fill
                       className="object-cover"
-                      referrerPolicy="no-referrer"
+                      fallbackTitle={selectedPest.name}
+                      fallbackCategory={selectedPest.category}
                     />
                   </div>
                   <div>

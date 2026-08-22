@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
+import SafeImage from '@/components/SafeImage';
 import { PEST_SERVICES } from '@/data/services';
 import { SAUDI_CITIES } from '@/data/regions';
 import { SeoBreadcrumbs } from '@/components/SeoBreadcrumbs';
@@ -180,13 +180,14 @@ export default async function ServiceDetailPage({ params }: Props) {
           </div>
 
           <div className="lg:col-span-5 relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-emerald-500/30 aspect-[4/3]">
-              <Image
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-emerald-500/30 aspect-[4/3] bg-slate-900">
+              <SafeImage
                 src={service.heroImage}
                 alt={service.title}
                 fill
                 className="object-cover"
-                referrerPolicy="no-referrer"
+                fallbackTitle={service.title}
+                fallbackCategory="خدمة معتمدة"
               />
             </div>
           </div>

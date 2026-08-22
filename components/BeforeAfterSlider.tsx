@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
+import SafeImage from '@/components/SafeImage';
 import {
   Sparkles,
   ShieldCheck,
@@ -170,14 +170,15 @@ export const BeforeAfterSlider: React.FC = () => {
             >
               {/* After Image (Full Background) */}
               <div className="absolute inset-0 w-full h-full">
-                <Image
+                <SafeImage
                   src={activeCase.afterImg}
                   alt="بعد المعالجة"
                   fill
                   className="object-cover"
-                  referrerPolicy="no-referrer"
+                  fallbackTitle="بعد المعالجة والتطهير الشامل"
+                  fallbackCategory="نتيجة معتمدة"
                 />
-                <div className="absolute top-4 left-4 bg-emerald-700/95 text-white text-xs font-bold px-3 py-1.5 rounded-xl border border-emerald-500 shadow-md flex items-center gap-1.5">
+                <div className="absolute top-4 left-4 bg-emerald-700/95 text-white text-xs font-bold px-3 py-1.5 rounded-xl border border-emerald-500 shadow-md flex items-center gap-1.5 z-10">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   <span>بعد المعالجة والتطهير</span>
                 </div>
@@ -190,14 +191,15 @@ export const BeforeAfterSlider: React.FC = () => {
                   clipPath: `polygon(0% 0%, ${sliderPosition}% 0%, ${sliderPosition}% 100%, 0% 100%)`
                 }}
               >
-                <Image
+                <SafeImage
                   src={activeCase.beforeImg}
                   alt="قبل المعالجة"
                   fill
                   className="object-cover"
-                  referrerPolicy="no-referrer"
+                  fallbackTitle="قبل المعالجة والرش"
+                  fallbackCategory="حالة تفشي سابقة"
                 />
-                <div className="absolute top-4 right-4 bg-rose-700/95 text-white text-xs font-bold px-3 py-1.5 rounded-xl border border-rose-500 shadow-md flex items-center gap-1.5">
+                <div className="absolute top-4 right-4 bg-rose-700/95 text-white text-xs font-bold px-3 py-1.5 rounded-xl border border-rose-500 shadow-md flex items-center gap-1.5 z-10">
                   <AlertTriangle className="w-3.5 h-3.5" />
                   <span>قبل المعالجة والرش</span>
                 </div>

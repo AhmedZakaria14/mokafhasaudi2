@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import {
   Settings,
   X,
@@ -50,7 +51,20 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
   const [warrantyResult, setWarrantyResult] = useState<boolean | null>(null);
   const [copiedCoupon, setCopiedCoupon] = useState(false);
 
-  if (!isOpen) return null;
+  // Handle escape key and body scroll lock for app-like modal experience
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isOpen, onClose]);
 
   const currentCityObj = SAUDI_CITIES.find((c) => c.id === selectedCity) || SAUDI_CITIES[0];
   const promoCode = 'SAUDI30';
@@ -71,42 +85,53 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden text-right select-none">
-      {/* Backdrop */}
-      <div
-        onClick={onClose}
-        className="absolute inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
-      />
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 overflow-hidden text-right select-none">
+          {/* Animated Glass Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
+            onClick={onClose}
+            className="absolute inset-0 bg-slate-950/70 backdrop-blur-sm cursor-pointer"
+          />
 
-      {/* Slide-over Panel Container */}
-      <div className="fixed inset-y-0 left-0 max-w-full flex pl-0 sm:pl-10">
-        <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between animate-in slide-in-from-left duration-250 border-r border-slate-200">
-          
-          {/* Header */}
-          <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-900 text-white">
-            <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-emerald-700 flex items-center justify-center text-white shadow-xs">
-                <Settings className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="font-black text-sm text-white flex items-center gap-1.5">
-                  <span>لوحة الخيارات والإعدادات (Settings Panel)</span>
-                </h3>
-                <p className="text-[11px] text-slate-300">
-                  الحاسبة، الاستعلام عن الضمان، تفاصيل الباقات، وتخصيص الفرع
-                </p>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={onClose}
-              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer"
-              aria-label="إغلاق"
+          {/* Slide-over Panel Container */}
+          <div className="fixed inset-y-0 left-0 max-w-full flex pl-0 sm:pl-10 pointer-events-none">
+            <motion.div
+              initial={{ x: '-100%', opacity: 0.8 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: '-100%', opacity: 0.8 }}
+              transition={{ type: 'spring', damping: 28, stiffness: 280, mass: 0.9 }}
+              className="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between border-r border-slate-200 pointer-events-auto"
             >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
+              {/* Header */}
+              <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-900 text-white">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-700 flex items-center justify-center text-white shadow-xs">
+                    <Settings className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-black text-sm text-white flex items-center gap-1.5">
+                      <span>لوحة الخيارات والإعدادات (Settings Panel)</span>
+                    </h3>
+                    <p className="text-[11px] text-slate-300">
+                      الحاسبة، الاستعلام عن الضمان، تفاصيل الباقات، وتخصيص الفرع
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer"
+                  aria-label="إغلاق"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
 
           {/* Tab Navigation */}
           <div className="flex items-center border-b border-slate-200 bg-slate-50 px-3 pt-2 gap-1 overflow-x-auto text-xs font-bold">
@@ -479,8 +504,10 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({
             </a>
           </div>
 
-        </div>
+        </motion.div>
       </div>
     </div>
+  )}
+</AnimatePresence>
   );
 };

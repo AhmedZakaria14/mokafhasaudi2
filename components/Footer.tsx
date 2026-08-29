@@ -132,7 +132,7 @@ export const Footer: React.FC<FooterProps> = ({
                 </Link>
               </li>
               <li>
-                <Link href="/services/pre-construction" className="hover:text-emerald-400 transition">
+                <Link href="/services/termites" className="hover:text-emerald-400 transition">
                   تدفين خرساني قبل صبة النظافة
                 </Link>
               </li>
@@ -157,12 +157,12 @@ export const Footer: React.FC<FooterProps> = ({
                 </Link>
               </li>
               <li>
-                <Link href="/services/scorpions" className="hover:text-emerald-400 transition">
+                <Link href="/services/scorpions-snakes" className="hover:text-emerald-400 transition">
                   مكافحة العقارب والثعابين
                 </Link>
               </li>
               <li>
-                <Link href="/services/agriculture" className="hover:text-emerald-400 transition">
+                <Link href="/services/gardens" className="hover:text-emerald-400 transition">
                   رش الحدائق والمسطحات الخضراء
                 </Link>
               </li>
@@ -256,7 +256,7 @@ export const Footer: React.FC<FooterProps> = ({
                 <span className="text-[10px] text-emerald-400">فوري</span>
               </div>
               <div className="flex items-center justify-between py-0.5">
-                <Link href="/city/abha" className="hover:text-emerald-400 transition">
+                <Link href="/city/abha-khamis" className="hover:text-emerald-400 transition">
                   مكافحة حشرات عسير وأبها
                 </Link>
                 <span className="text-[10px] text-emerald-400">فوري</span>

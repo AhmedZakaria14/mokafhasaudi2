@@ -64,7 +64,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       authors: [post.author]
     },
     alternates: {
-      canonical: `https://حصن-المملكة.com/blog/${post.slug}`
+      canonical: `https://www.mokafahalriyadh.com/blog/${post.slug}`
     }
   };
 }
@@ -97,15 +97,15 @@ export default async function BlogPostPage({ params }: Props) {
     publisher: {
       '@type': 'Organization',
       name: 'مؤسسة حصن المملكة لمكافحة الآفات والرش الهندسي',
-      url: 'https://حصن-المملكة.com',
+      url: 'https://www.mokafahalriyadh.com',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://حصن-المملكة.com/icon.png'
+        url: 'https://www.mokafahalriyadh.com/icon.png'
       }
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://حصن-المملكة.com/blog/${post.slug}`
+      '@id': `https://www.mokafahalriyadh.com/blog/${post.slug}`
     },
     keywords: post.keywords.join(', ')
   };

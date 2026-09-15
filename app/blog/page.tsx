@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     'عقود مكافحة الحشرات للمطاعم والمنشآت'
   ],
   alternates: {
-    canonical: 'https://حصن-المملكة.com/blog'
+    canonical: 'https://www.mokafahalriyadh.com/blog'
   }
 };
 
@@ -30,13 +30,13 @@ export default function BlogDirectoryPage() {
     '@type': 'Blog',
     name: 'موسوعة واستشارات حصن المملكة لمكافحة الآفات والصحة العامة',
     description: 'مقالات وأدلة علمية تفصيلية تغطي مكافحة الحشرات والقوارض والوقاية الإنشائية في كافة مناطق المملكة العربية السعودية.',
-    url: 'https://حصن-المملكة.com/blog',
+    url: 'https://www.mokafahalriyadh.com/blog',
     publisher: {
       '@type': 'Organization',
       name: 'مؤسسة حصن المملكة لمكافحة الآفات',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://حصن-المملكة.com/icon.png'
+        url: 'https://www.mokafahalriyadh.com/icon.png'
       }
     },
     blogPost: SAUDI_BLOG_POSTS.map((post) => ({
@@ -49,7 +49,7 @@ export default function BlogDirectoryPage() {
         '@type': 'Person',
         name: post.author
       },
-      url: `https://حصن-المملكة.com/blog/${post.slug}`
+      url: `https://www.mokafahalriyadh.com/blog/${post.slug}`
     }))
   };
 

@@ -60,7 +60,7 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'PestControlBusiness',
     name: 'مؤسسة حصن المملكة لمكافحة الآفات والوقاية الإنشائية',
-    url: 'https://حصن-المملكة.com',
+    url: 'https://www.mokafahalriyadh.com',
     logo: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=300&q=80',
     telephone: '+966558141870',
     priceRange: 'SAR 180 - 1500',

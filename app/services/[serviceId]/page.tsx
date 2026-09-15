@@ -64,7 +64,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [{ url: service.heroImage }]
     },
     alternates: {
-      canonical: `https://حصن-المملكة.com/services/${service.id}`
+      canonical: `https://www.mokafahalriyadh.com/services/${service.id}`
     }
   };
 }

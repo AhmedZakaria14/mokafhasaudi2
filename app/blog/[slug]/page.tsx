@@ -264,11 +264,119 @@ export default async function BlogPostPage({ params }: Props) {
 
             {/* Markdown Body Content with High Typography Styling */}
             <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-xs">
-              <div className="blog-article-content text-slate-800 text-sm sm:text-base leading-loose space-y-6">
+              <div className="blog-article-content text-slate-800 text-sm sm:text-base leading-loose">
                 <Markdown
                   remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeRaw]}
                   components={{
+                    h2: ({ children, ...props }) => {
+                      const text = React.Children.toArray(children)
+                        .map((c) => (typeof c === 'string' ? c : ''))
+                        .join('')
+                        .trim();
+                      const matched = post.tableOfContents?.find((item) => {
+                        const normTitle = item.title.replace(/[0-9\.\-\:\s]/g, '');
+                        const normText = text.replace(/[0-9\.\-\:\s]/g, '');
+                        return normTitle.includes(normText) || normText.includes(normTitle) || item.id === text;
+                      });
+                      const id = matched ? matched.id : undefined;
+                      return (
+                        <h2
+                          id={id}
+                          className="scroll-mt-24 text-lg sm:text-xl font-black text-emerald-950 mt-8 mb-4 pb-2 border-b border-emerald-100 flex items-center gap-2"
+                          {...props}
+                        >
+                          <span className="w-2 h-2 rounded-full bg-emerald-600 shrink-0" />
+                          <span>{children}</span>
+                        </h2>
+                      );
+                    },
+                    h3: ({ children, ...props }) => {
+                      const text = React.Children.toArray(children)
+                        .map((c) => (typeof c === 'string' ? c : ''))
+                        .join('')
+                        .trim();
+                      const matched = post.tableOfContents?.find((item) => {
+                        const normTitle = item.title.replace(/[0-9\.\-\:\s]/g, '');
+                        const normText = text.replace(/[0-9\.\-\:\s]/g, '');
+                        return normTitle.includes(normText) || normText.includes(normTitle) || item.id === text;
+                      });
+                      const id = matched ? matched.id : undefined;
+                      return (
+                        <h3
+                          id={id}
+                          className="scroll-mt-24 text-base sm:text-lg font-bold text-slate-900 mt-6 mb-3 text-right"
+                          {...props}
+                        >
+                          {children}
+                        </h3>
+                      );
+                    },
+                    p: ({ children, ...props }) => (
+                      <p className="text-slate-700 leading-loose my-4 font-normal text-right" {...props}>
+                        {children}
+                      </p>
+                    ),
+                    ul: ({ children, ...props }) => (
+                      <ul className="space-y-2 my-4 list-disc list-inside text-slate-700 pr-2 text-right" {...props}>
+                        {children}
+                      </ul>
+                    ),
+                    ol: ({ children, ...props }) => (
+                      <ol className="space-y-2 my-4 list-decimal list-inside text-slate-700 pr-2 text-right" {...props}>
+                        {children}
+                      </ol>
+                    ),
+                    li: ({ children, ...props }) => (
+                      <li className="leading-relaxed" {...props}>
+                        {children}
+                      </li>
+                    ),
+                    hr: ({ ...props }) => (
+                      <hr className="my-8 border-t border-slate-200" {...props} />
+                    ),
+                    strong: ({ children, ...props }) => (
+                      <strong className="font-bold text-slate-950" {...props}>
+                        {children}
+                      </strong>
+                    ),
+                    blockquote: ({ children, ...props }) => (
+                      <blockquote className="my-6 border-r-4 border-emerald-600 bg-emerald-50/50 p-4 rounded-xl text-slate-800 italic" {...props}>
+                        {children}
+                      </blockquote>
+                    ),
+                    table: ({ children, ...props }) => (
+                      <div className="my-6 overflow-x-auto rounded-2xl border border-slate-200 shadow-xs">
+                        <table className="min-w-full divide-y divide-slate-200 text-right text-xs sm:text-sm" {...props}>
+                          {children}
+                        </table>
+                      </div>
+                    ),
+                    thead: ({ children, ...props }) => (
+                      <thead className="bg-slate-100 text-slate-900 font-bold" {...props}>
+                        {children}
+                      </thead>
+                    ),
+                    tbody: ({ children, ...props }) => (
+                      <tbody className="divide-y divide-slate-100 bg-white" {...props}>
+                        {children}
+                      </tbody>
+                    ),
+                    tr: ({ children, ...props }) => (
+                      <tr className="hover:bg-slate-50 transition" {...props}>
+                        {children}
+                      </tr>
+                    ),
+                    th: ({ children, ...props }) => (
+                      <th className="px-4 py-3 font-black text-slate-900 text-right" {...props}>
+                        {children}
+                      </th>
+                    ),
+                    td: ({ children, ...props }) => (
+                      <td className="px-4 py-3 text-slate-700 text-right leading-relaxed" {...props}>
+                        {children}
+                      </td>
+                    ),
                     a: ({ href, children, ...props }) => (
                       <a
                         href={href}

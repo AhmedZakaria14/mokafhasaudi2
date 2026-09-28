@@ -44,10 +44,9 @@ export const BlogDirectoryClient: React.FC<BlogDirectoryClientProps> = ({ posts 
     { id: 'qassim', name: 'منطقة القصيم (بريدة وعنيزة والرس)' }
   ];
 
-  // Pest & Service categories
+  // Pest categories
   const PEST_OPTIONS = [
     { id: 'all', name: 'جميع الآفات والتخصصات' },
-    { id: 'تنظيف', name: 'تنظيف وتعقيم الفلل والقصور' },
     { id: 'النمل الأبيض', name: 'النمل الأبيض (الأرضة والدفان)' },
     { id: 'الصراصير', name: 'صراصير المطابخ والمجاري' },
     { id: 'بق الفراش', name: 'بق الفراش والمفروشات' },
